@@ -10,3 +10,7 @@ Certificate pinning is one of the basic security mechanisms of network communica
 
 ## [iOS Security analysis with MobSF](https://www.netguru.com/codestories/ios-security-analysis-with-mobsf)
 MobSF is a tool for testing mobile applications. This article shows how to increase the security of iOS applications by integrating MobSF with Bitrise.
+
+## [Mobile Security Group](https://www.netguru.com/blog/mobile-security-group)
+I was mobile security group leader for a year and group member since beggining of the group.
+Blogpost describes initiatives that we had and how we could develop our skills in that area. 
