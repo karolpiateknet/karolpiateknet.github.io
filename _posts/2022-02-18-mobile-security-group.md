@@ -6,4 +6,4 @@ redirect_to: https://www.netguru.com/blog/mobile-security-group
 tags: iOS Android security mobile
 ---
 
-<meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+{% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
