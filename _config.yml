@@ -20,17 +20,17 @@ author:
   name             : "Karol Piątek"
   avatar           : "/assets/images/emoji.png"
   bio              : "Senior iOS developer with mobile security experience"
-#   location         : "Remote"
-#   links:
-#     - label: "LinkedIn"
-#       icon: "fab fa-linkedin-in"
-#       url: "https://www.linkedin.com/in/karolpiatek/"
-#     - label: "Twitter"
-#       icon: "fab fa-fw fa-twitter-square"
-#       url: "https://twitter.com/karolpiateknet"
-#     - label: "GitHub"
-#       icon: "fab fa-fw fa-github"
-#       url: "https://github.com/karolpiateknet"
+  location         : "Remote"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-linkedin-in"
+      url: "https://www.linkedin.com/in/karolpiatek/"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/karolpiateknet"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/karolpiateknet"
 
 # Site Footer
 footer:
