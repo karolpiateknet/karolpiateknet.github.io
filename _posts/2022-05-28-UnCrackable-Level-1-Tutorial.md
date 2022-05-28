@@ -44,7 +44,7 @@ If you would like to learn more about Android project structure you can check ou
 
 `UnCrackable-Level1/sources/sg/vantagepoint/uncrackable1/MainActivity.java`
 
-```Java
+```java
 if (a.a(obj)) {
   create.setTitle("Success!");
   str = "This is the correct secret.";
@@ -57,7 +57,7 @@ if (a.a(obj)) {
 We can find you there that success alert will be presented when function a from a class will return true. Let’s find out what’s inside a class. 
 Path: `UnCrackable-Level1/sources/sg/vantagepoint/a/a.java`
 
-```
+```java
 public static boolean a(String str) {
     byte[] bArr;
     byte[] bArr2 = new byte[0];
@@ -77,7 +77,7 @@ Second one is the result of the function call: `b("8d127684cbc37c17616d806cf5047
 
 Inside `sg.vantagepoint.a.a.a` those two byte arrays are being encrypted using AES algorithm, the result is the secret key that we are looking for.
 
-```Java
+```java
 public class a {
    public static byte[] a(byte[] bArr, byte[] bArr2) {
        SecretKeySpec secretKeySpec = new SecretKeySpec(bArr, "AES/ECB/PKCS7Padding");
@@ -93,7 +93,7 @@ When working with obfuscated code it is good practice to rename those obfuscated
 Let’s rename some functions.
 
 Before:
-```Java
+```java
 public class a {
     public static boolean a(String str) {
         byte[] bArr;
@@ -119,7 +119,7 @@ public class a {
 ```
 
 After:
-```Java
+```java
 /// Class is responsible for managing the hidden secret.
 public class SecretManager {
 
@@ -161,7 +161,7 @@ We can change `compareSecret` function to return the value instead of comparing 
 
 `Note: As it is Android code it is not possible to run it in the same way using just Java, it has to be run on Android device or adjusted to normal Java code.`
 
-```Java
+```java
 /// Function compares passed string with secret.
 /// - Parameter userInput: String entered by the user inside the textField.
 public static String compareSecret(String userInput) {
@@ -449,7 +449,7 @@ Inside uncrakable1 directory we can see the a.smali file there which contains th
 
 The method is quite long comparing to Java code:
 
-```smali
+```
 .method public static a(Ljava/lang/String;)Z
     .locals 5
 
@@ -473,7 +473,7 @@ But we know that we just need to return the true.
 
 After changing behaviour to always return true the function will look like this:
 
-```smali
+```
 .method public static a(Ljava/lang/String;)Z
     .locals 5
 
