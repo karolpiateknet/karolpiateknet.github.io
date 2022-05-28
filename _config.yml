@@ -1,10 +1,24 @@
+# Welcome to Jekyll!
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# `jekyll serve`. If you change this file, please restart the server process.
+
+# Theme Settings
+#
+# Review documentation to determine if you should use `theme` or `remote_theme`
+# https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
+
+# theme                  : "minimal-mistakes-jekyll"
 remote_theme: mmistakes/minimal-mistakes
 minimal_mistakes_skin: mint
 
+# Site Settings
+locale                   : "en-US"
 title                    : "Swifty Friday Blog"
 title_separator          : "-"
+subtitle                 : "iOS development, mobile security, development cycle"
 name                     : "Karol Piątek"
-description              : "iOS development, mobile security, development cycle"
+description              : "Senior iOS developer with interests in mobile security"
 author_profile           : true
 timezone: "Poland"
 breadcrumbs: true
@@ -16,6 +30,14 @@ lunr:
 # Social Sharing
 twitter:
   username               : "karolpiateknet"
+
+## Analytics
+# TODO
+#analytics:
+#  provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
+#  google:
+#    tracking_id          : "TODO"
+#    anonymize_ip         : false
 
 # Site Author
 author: Karol Piatek
@@ -32,6 +54,66 @@ footer:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/karolpiateknet"
+
+# Reading Files
+include:
+  - .htaccess
+  - _pages
+exclude:
+  - "*.sublime-project"
+  - "*.sublime-workspace"
+  - vendor
+  - .asset-cache
+  - .bundle
+  - .jekyll-assets-cache
+  - .sass-cache
+  - assets/js/plugins
+  - assets/js/_main.js
+  - assets/js/vendor
+  - Capfile
+  - CHANGELOG
+  - config
+  - Gemfile
+  - Gruntfile.js
+  - gulpfile.js
+  - LICENSE
+  - log
+  - node_modules
+  - package.json
+  - package-lock.json
+  - Rakefile
+  - README
+  - tmp
+  - /docs # ignore Minimal Mistakes /docs
+  - /test # ignore Minimal Mistakes /test
+keep_files:
+  - .git
+  - .svn
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+# Conversion
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
+# Markdown Processing
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+
+# Sass/SCSS
+sass:
+  sass_dir: _sass
+  style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
 plugins:
   - jekyll-paginate
