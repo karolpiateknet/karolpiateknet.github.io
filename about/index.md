@@ -34,15 +34,15 @@ In my experience I worked on multiple projects like:
 | Skill | Rating   | Comment |
 | ----- | -------- | --------|
 | Swift | ⭐⭐⭐⭐⭐ | |
-| Objective-C | ⭐⭐ | Refactored old code in Objective-C code and fixed bugs |
-| Architecture patterns | ⭐⭐⭐⭐⭐ | Worked with MVVM, MVC, VIPER, Coordinators, structural, behavioral, creational patterns and many others. |
+| Objective-C | ⭐⭐ | Refactored old code in Objective-C and fixed bugs |
+| Architecture patterns | ⭐⭐⭐⭐⭐ | Worked with MVVM, MVC, MVP, VIPER, Coordinators, structural, behavioral, creational patterns and many others. |
 | SOLID principles | ⭐⭐⭐⭐⭐ | |
 | iOS Security | ⭐⭐⭐⭐⭐ | |
 | Android security | ⭐⭐ | |
 | ARC | ⭐⭐⭐⭐⭐ | |
 | Autolayout | ⭐⭐⭐⭐⭐ | |
 | UIKit | ⭐⭐⭐⭐⭐ | |
-| CI  | ⭐⭐⭐⭐ | Used Bitrise and Jenkins in work |
+| CI  | ⭐⭐⭐⭐ | Used Bitrise and Jenkins in commercial work |
 | Unit Tests | ⭐⭐⭐⭐⭐ | |
 | Quick/Nimble | ⭐⭐⭐⭐ | |
 | RxSwift | ⭐⭐⭐⭐ | |
