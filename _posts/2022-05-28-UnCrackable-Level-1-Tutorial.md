@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: posts
 title: UnCrackable Level 1 tutorial
 author_profile: true
 ---
