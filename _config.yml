@@ -17,21 +17,7 @@ twitter:
   username               : "karolpiateknet"
 
 # Site Author
-author:
-  name             : "Karol Piątek"
-  avatar           : "/assets/images/emoji.png"
-  bio              : "Senior iOS developer with mobile security experience"
-  location         : "Remote"
-  links:
-    - label: "LinkedIn"
-      icon: "fa-brands fa-linkedin"
-      url: "https://www.linkedin.com/in/karolpiatek/"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/karolpiateknet"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/karolpiateknet"
+author: Karol Piatek
 
 # Site Footer
 footer:
