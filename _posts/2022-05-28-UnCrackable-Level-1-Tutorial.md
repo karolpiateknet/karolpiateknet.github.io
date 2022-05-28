@@ -31,7 +31,9 @@ Easiest way to understand Android application code is to decompile Dalvik byteco
 
 ### Installation
 
-`brew install jadx`
+```console
+brew install jadx
+```
 
 ### Run
 
@@ -42,7 +44,9 @@ Easiest way to understand Android application code is to decompile Dalvik byteco
 After decompilation of UnCrackable-Level1, we can see the project structure. 
 If you would like to learn more about Android project structure you can check out this hack one article. We would like to find the MainActivity.java file which is the app starting point in Android.
 
-`UnCrackable-Level1/sources/sg/vantagepoint/uncrackable1/MainActivity.java`
+```console
+UnCrackable-Level1/sources/sg/vantagepoint/uncrackable1/MainActivity.java
+```
 
 ```java
 if (a.a(obj)) {
@@ -75,7 +79,7 @@ We can see that this function is comparing two strings and returns the value of 
 One is just the result of `"5UJiFctbmgbDoLXmpL12mkno8HT4Lv8dlat8FxR2GOc="` Base64 decoding.
 Second one is the result of the function call: `b("8d127684cbc37c17616d806cf50473cc")`. Which performs some operations to change String to byte array.
 
-Inside `sg.vantagepoint.a.a.a` those two byte arrays are being encrypted using AES algorithm, the result is the secret key that we are looking for.
+Inside *sg.vantagepoint.a.a.a* those two byte arrays are being encrypted using AES algorithm, the result is the secret key that we are looking for.
 
 ```java
 public class a {
@@ -157,9 +161,9 @@ This section contains different solutions how to get the hidden secret, but also
 ## Solution 1: Find the comparison method and print out the key
 
 First solution to retrieve a hidden key is to copy / paste methods that are responsible for decryption of it and just print out the value.
-We can change `compareSecret` function to return the value instead of comparing it to userInput
+We can change *compareSecret* function to return the value instead of comparing it to userInput
 
-`Note: As it is Android code it is not possible to run it in the same way using just Java, it has to be run on Android device or adjusted to normal Java code.`
+*Note: As it is Android code it is not possible to run it in the same way using just Java, it has to be run on Android device or adjusted to normal Java code.*
 
 ```java
 /// Function compares passed string with secret.
@@ -205,7 +209,7 @@ public static byte[] decryptHiddenKey(byte[] aesSecretKey, byte[] keyToDecrypt) 
 Above you can find copy / pasted code from the app to get the secret, to get the hidden secret just call `print(compareSecret("some thing"))` it will print out the hidden secret.
 Let’s run it :D
 
-`I want to believe`
+*I want to believe*
 
  Veryfing this value will result success message 🥳
 
@@ -223,13 +227,15 @@ To use frida you need to install it and run following [tutorial](https://frida.r
 
 After first run in the future we will just need this command:
 
-`adb shell "/data/local/tmp/frida-server &"`
+```console
+adb shell "/data/local/tmp/frida-server &"
+```
 
 tu run Frida server in the background.
 When Frida is working you can attach the script to the app and change its behaviour.
 We will need an app identifier for attach command you can find it using command:
 
-```
+```console
 MacBook-Pro:~ macbook$ frida-ps -Ua
  PID  Name          Identifier             
 ----  ------------  -----------------------
@@ -240,7 +246,7 @@ MacBook-Pro:~ macbook$ frida-ps -Ua
 
 Then we can attach Frida code using command:
 
-```
+```console
 frida -U -l UncrackableLevel1.js  -f owasp.mstg.uncrackable1
 ```
 
@@ -254,7 +260,7 @@ As some of Android emulators may not allow adb root access, [see stackOverFlow t
 I'm working on Nexus 6 API 29 without any problems.
 
 If you got some problem with Frida you can restart it using commands:
-```
+```console
 adb shell 
 ps -e | grep frida-server 
 kill -9 PID_of_frida_process_from_previous_command
@@ -489,21 +495,23 @@ In the same way we need to bypass the root detection and debuggable detection, b
 
 4. Repackage app using command:
 
-`apktool b -f -d UnCrackable-Level1`
+```console
+apktool b -f -d UnCrackable-Level1
+```
 
 5. After recompiling new build is available inside dist directory
 
-Path: `/UnCrackable-Level1/dist/UnCrackable-Level1.apk`
+Path: ```/UnCrackable-Level1/dist/UnCrackable-Level1.apk```
 
 7. Repackaging the app with your Certificate
 
 Inorder to be able to install app again we need to sign it with our new certificate.
 
   6.1 Create certificate 
-      `keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000`
+      ```keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000```
   6.2 Sign app with certificate
-      `jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore UnCrackable-Level1.apk alias_name`
+      ```jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore UnCrackable-Level1.apk alias_name```
   6.3 Install app to emulators
-      `adb install UnCrackable-Level1.apk`
+      ```adb install UnCrackable-Level1.apk```
       
 8. Our app is displaying always success alert.
