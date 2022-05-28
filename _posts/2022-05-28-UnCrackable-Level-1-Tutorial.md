@@ -4,30 +4,30 @@ title: UnCrackable Level 1 tutorial
 author_profile: true
 ---
 
-# Introduction
+Uncrakable apps are one of the most popular mobile reverse engineering challenges.
+You will find here complete tutorial on how to solve UnCrackable Level 1 in different ways to get the hidden key, but we will also bypass checks just to get the success Alert.
 
-This repository contains a complete tutorial on how to solve UnCrackable Level 1 in different ways to get the hidden key, but we will also bypass checks just to get the success Alert in different ways.
-
-Objective: A secret string is hidden somewhere in this app. Find a way to extract it.
+Task: A secret string is hidden somewhere in this app. Find a way to extract it.
 
 
 # Recon
 
-This section contains all information on how to understand CrackMe Level1 logic.
+Before writing script to extract the key or bypass checks, we will perform recon to understand app login.
 
-## Running the app
+## Playing with app
 
-After running the application we can see that we got a single text field with the button to verify provided value.
-Entering some example value and pressing verify button will result error message saying it's wrong value.
+On the main screen of the application, we can see a single text field with the button to enter secret string.
+After entering random value and pressing the verify button, we will see an error message saying it is a wrong value.
 Let's see how we can find this value.
 
 Main screen                |  Failed Verification
 :-------------------------:|:-------------------------:
 ![Main screen](/assets/images/posts/UnCrackable1/uncrackable1-main-screen.png)  |  ![Failed Verification](/assets/images/posts/UnCrackable1/uncrackable1-failed-verification.png)
 
-## Jadx
+## Understanding Android app with Jadx
 
-Easiest way to understand Android application code is to decompile Dalvik bytecode to java classes from APK. You can use for example the jadx tool for that. Keep in mind that it might not work with all APK files, as they may be protected with different obfuscation techniques or use not compatible Java versions. So sometimes it is worth trying multiple versions of jadx in order to decompile Dalvik.
+Easiest way to understand Android application code is to decompile Dalvik bytecode to java classes from APK. 
+You can use the jadx tool for this. Keep in mind that it might not work with all APK files, as they may be protected with different obfuscation techniques or use not compatible Java versions. So sometimes it is worth trying multiple versions of jadx in order to decompile Dalvik code.
 
 ### Installation
 
@@ -35,18 +35,24 @@ Easiest way to understand Android application code is to decompile Dalvik byteco
 brew install jadx
 ```
 
-### Run
+### Running Jadx
 
-`jadx UnCrackable-Level1.apk`
+```console
+jadx UnCrackable-Level1.apk
+```
 
-### Logic
+### Understanding app logic
 
-After decompilation of UnCrackable-Level1, we can see the project structure. 
-If you would like to learn more about Android project structure you can check out this hack one article. We would like to find the MainActivity.java file which is the app starting point in Android.
+After decompilation of UnCrackable-Level1, we can see structure of the project . 
+We would like to find the MainActivity.java file, which is the app starting point in Android applications.
+
+File is present in the directory:
 
 ```console
 UnCrackable-Level1/sources/sg/vantagepoint/uncrackable1/MainActivity.java
 ```
+
+and if statement responsible for showing adequate alert message is present in this file:
 
 ```java
 if (a.a(obj)) {
@@ -58,8 +64,16 @@ if (a.a(obj)) {
 }
 ```
 
-We can find you there that success alert will be presented when function a from a class will return true. Let’s find out what’s inside a class. 
-Path: `UnCrackable-Level1/sources/sg/vantagepoint/a/a.java`
+Success alert will be presented when function *a* from *a* class will return true. 
+Let’s find out what’s inside *a* class. 
+
+*a* class file Path: 
+
+```console 
+UnCrackable-Level1/sources/sg/vantagepoint/a/a.java
+```
+
+*a* class:
 
 ```java
 public static boolean a(String str) {
@@ -75,11 +89,14 @@ public static boolean a(String str) {
 }
 ```
 
-We can see that this function is comparing two strings and returns the value of this comparison as a result. Secret string is retrieved using the sg.vantagepoint.a.a.a function with two arguments. 
-One is just the result of `"5UJiFctbmgbDoLXmpL12mkno8HT4Lv8dlat8FxR2GOc="` Base64 decoding.
-Second one is the result of the function call: `b("8d127684cbc37c17616d806cf50473cc")`. Which performs some operations to change String to byte array.
+Function is comparing two strings and returns the value of this comparison as a result. 
+Secret string is retrieved using the *sg.vantagepoint.a.a.a* function with two String arguments. 
+One is the result of `"5UJiFctbmgbDoLXmpL12mkno8HT4Lv8dlat8FxR2GOc="` Base64 decoding and 
+the second one is the result of the function call: `b("8d127684cbc37c17616d806cf50473cc")`. Which performs some operations to change String to byte array.
 
-Inside *sg.vantagepoint.a.a.a* those two byte arrays are being encrypted using AES algorithm, the result is the secret key that we are looking for.
+Inside *sg.vantagepoint.a.a.a* function those two byte arrays are being encrypted using AES algorithm and the result is the secret key that we are looking for.
+
+*sg.vantagepoint.a.a* class:
 
 ```java
 public class a {
@@ -92,11 +109,13 @@ public class a {
 }
 ```
 
-## Pro tip
-When working with obfuscated code it is good practice to rename those obfuscated methods to something meaningful, so you can understand more and more code.
-Let’s rename some functions.
+## Recon Pro tip
 
-Before:
+When working with obfuscated code, it is good practice to rename obfuscated methods to meaningful names.
+Gradually renaming functions will make your code more and more readable.
+
+Obfuscated code:
+
 ```java
 public class a {
     public static boolean a(String str) {
@@ -122,7 +141,8 @@ public class a {
 }
 ```
 
-After:
+Code after renames:
+
 ```java
 /// Class is responsible for managing the hidden secret.
 public class SecretManager {
@@ -156,14 +176,13 @@ public class SecretManager {
 ```
 
 # Solutions
-This section contains different solutions how to get the hidden secret, but also how to just bypass the security check and just get a success alert.
 
-## Solution 1: Find the comparison method and print out the key
+## Solution 1: Find the keys comparison method and print out the secret key
 
-First solution to retrieve a hidden key is to copy / paste methods that are responsible for decryption of it and just print out the value.
-We can change *compareSecret* function to return the value instead of comparing it to userInput
+First solution to retrieve a hidden key is to copy / paste methods that are responsible for decryption of the secret key and print out decrypted value.
+We can change *compareSecret* function to return the value instead of comparing it to userInput.
 
-*Note: As it is Android code it is not possible to run it in the same way using just Java, it has to be run on Android device or adjusted to normal Java code.*
+*Note: As it is Android code, it is not possible to run it in the same way using just Java, it has to be run on Android device or adjusted to normal Java code.*
 
 ```java
 /// Function compares passed string with secret.
@@ -207,33 +226,33 @@ public static byte[] decryptHiddenKey(byte[] aesSecretKey, byte[] keyToDecrypt) 
 ```
 
 Above you can find copy / pasted code from the app to get the secret, to get the hidden secret just call `print(compareSecret("some thing"))` it will print out the hidden secret.
-Let’s run it :D
+Result:
 
 *I want to believe*
 
- Veryfing this value will result success message 🥳
+After entering this value, we will get success message 🥳
 
 ![Success message](/assets/images/posts/UnCrackable1/uncrackable1-success.png)
 
 
 ## Solution 2: Frida script
 
+Let's start with what is Frida?
 In short simple words Frida allows to change applications behaviour without modifying application code, but change it while app code is being loaded.
-If you don't know what is Frida you can read about it [here](https://frida.re/docs/home/).
+You can read more about Frida [here](https://frida.re/docs/home/).
 
 ### [How to run Frida](https://frida.re/docs/android/)
 
-To use frida you need to install it and run following [tutorial](https://frida.re/docs/android/).
+Install frida following [tutorial](https://frida.re/docs/android/).
 
-After first run in the future we will just need this command:
+Run Frida with command, to run Frida server in the background:
 
 ```console
 adb shell "/data/local/tmp/frida-server &"
 ```
 
-tu run Frida server in the background.
-When Frida is working you can attach the script to the app and change its behaviour.
-We will need an app identifier for attach command you can find it using command:
+When Frida is running, script can be attached to the app and modify its behaviour.
+App identifier is needed to attach frida to specific app, app identifiers can be listed with command:
 
 ```console
 MacBook-Pro:~ macbook$ frida-ps -Ua
@@ -244,14 +263,14 @@ MacBook-Pro:~ macbook$ frida-ps -Ua
 8909  Uncrackable1  owasp.mstg.uncrackable1
 ```
 
-Then we can attach Frida code using command:
+Then Frida could be attached with command:
 
 ```console
 frida -U -l UncrackableLevel1.js  -f owasp.mstg.uncrackable1
 ```
 
-Where `UncrackableLevel1.js` is a file which contains our code frida code.
-It will be created in [section](https://github.com/karolpiateknet/Android-Security-UnCrackable-Level-1/blob/main/README.md#frida-code)
+Where `UncrackableLevel1.js` is a file which contains frida script.
+It will be created in [section](#frida-code)
 
 #### Pro tips
 
@@ -259,7 +278,7 @@ If you are using Android emulator remenber to use Android version without google
 As some of Android emulators may not allow adb root access, [see stackOverFlow thread](https://stackoverflow.com/questions/43923996/adb-root-is-not-working-on-emulator-cannot-run-as-root-in-production-builds).
 I'm working on Nexus 6 API 29 without any problems.
 
-If you got some problem with Frida you can restart it using commands:
+If you got some problem with Frida, you can restart it using commands:
 ```console
 adb shell 
 ps -e | grep frida-server 
@@ -268,9 +287,10 @@ kill -9 PID_of_frida_process_from_previous_command
 
 ### Root detection bypass
 
-After running the application on Rooted devices you can see that Uncrackable App is detecting root access and closing the app.
+After running the application on Rooted devices, app will detect root access and closie the app.
 In order to be able to run the app without closing it we need to bypass those detections.
-As we can find out there are three checks, if even single one will return true our app will be closed.
+
+There are three checks that detects root, if even single one will return true our app will be closed.
 
 ```javascript
 if (c.a() || c.b() || c.c()) {
@@ -278,11 +298,11 @@ if (c.a() || c.b() || c.c()) {
 }
 ```
 
-Preventing app from closing can be achieved here in multiple ways, we can either override returned values by root checks to always return false or override `System.exit(0);` function to do not close the app. Let's see how it would look like.
+Preventing app from closing can be achieved here in multiple ways, we can either override returned values by root checks to always return false or override `System.exit(0);` function to do not close the app.
 
 #### Overriding root detection checks
 
-Code for bypassing root detection functions and returning always false.
+Code for bypassing root detection functions and returning always false:
 
 ```javascript
 /// Bypass root detection in UncracableLevel1.
@@ -306,7 +326,7 @@ function bypassRootDetection () {
 
 #### Overriding system exit function
 
-Code for overriding system exit function to do not close app.
+Code for overriding system exit function to do not close app:
 
 ```javascript
 /// Overrides system exit function to do nothing.
@@ -320,10 +340,12 @@ function overrideExit () {
 };
 ```
 
-### Decrypting function
+### Decryption function
 
-The hidden secret can be decrypted in the same way as it is done in [Solution 1](https://github.com/karolpiateknet/Android-Security-UnCrackable-Level-1#solution-1-find-the-comparison-method-and-print-out-the-key).
-We need to run all decrypting methods as it is done in the orginal code and return the hidden value.
+The hidden secret can be decrypted in the same way as it is done in [Solution 1](#solution-1-find-the-comparison-method-and-print-out-the-key).
+Script has to run all decrypting methods as it is done in the orginal code and return the hidden value.
+
+Decryption script:
 
 ```javascript
 function decryptSecret() {
@@ -345,8 +367,8 @@ function decryptSecret() {
 
 ### Bypass value check function
 
-In order to get success alert we can just override the check secret function to return always true.
-It won't solve the challenge which is to find the hidden secret, but it will be an intresting way to get success alert.
+Other solution using Frida to get success alert would be to override check of the secret value to always return false.
+It won't solve the challenge which is to find the hidden secret, but it will be an interesting way to get success alert.
 
 ```javascript
 function bypassSecretCheck() {
@@ -359,7 +381,7 @@ function bypassSecretCheck() {
 
 ### Complete Frida code - UncrackableLevel1.js
 
-Complete frida code to solve the challenge in different ways.
+Complete frida code to solve the challenge in different ways:
 
 ```javascript
 Java.perform(function() {
@@ -422,38 +444,34 @@ Java.perform(function() {
 });
 ```
 
-## Solution 3: Change static code using apktool
-
-In this section we will use Apktool to change application behaviour to get success alert without getting the hidden key.
+## Solution 3: Changing static code using apktool
 
 ### What is Apktool?
 
-Apktool can decode the application code to [smali](https://github.com/JesusFreke/smali), which can be modified and rebuild to working application with modified static code.
+Apktool decodes the application code to [smali](https://github.com/JesusFreke/smali), which can be modified and rebuild to working application with modified code.
 
 [Installation doc](https://ibotpeaches.github.io/Apktool/install/)
 
 ### Solution
 
-Using apktool we can bypass root detection and secret check function to get the success alert, as previously it was done in [Frida section](https://github.com/karolpiateknet/Android-Security-UnCrackable-Level-1#overriding-root-detection-checks).
+similarly to [Frida solution](### Bypass value check function) apktool can change code and bypass root detection and secret check function to get the success alert.
 
-Let's see how we can achieve that.
+1. Firstly apk file have to be decompiled with command:
 
-1. First we need to decompile apk file using command:
+    ```console
+    apktool d UnCrackable-Level1.apk
+    ```
 
-    `apktool d UnCrackable-Level1.apk`
-
-    We will receive the application smali code with project structure:
+    It will generate the application smali code with project structure:
 
     ![Project structure](/assets/images/posts/UnCrackable1/uncrackable1-project-structure.png)
 
-    As we can see structure is basically the same as it was with jadx tool.
+    Strcture is the same as it was with Jadx tool.
 
-2. Find proper smali a.smali file
+2. Find proper smali *a.smali* file
 
-    As previously we need to return false inside root detection functions and secret check function.
-    Inside uncrakable1 directory we can see the a.smali file there which contains the secret check function.
-
-    The method is quite long comparing to Java code:
+    As previously, root detection functions and secret check function needs to be bypassed and return false.
+    Inside uncrakable1 directory the a.smali file contains the secret check function, but the method is quite long comparing to Java code:
 
     ```
     .method public static a(Ljava/lang/String;)Z
@@ -473,9 +491,9 @@ Let's see how we can achieve that.
     .end method
     ```
 
-    But we know that we just need to return the true.
+    Nevertheless change will be small, function just needs to return true.
 
-3. Change comparison to always true
+3. Changing comparison to always return true
 
     After changing behaviour to always return true the function will look like this:
 
@@ -491,33 +509,39 @@ Let's see how we can achieve that.
     .end method
     ```
 
-    In the same way we need to bypass the root detection and debuggable detection, but just return `0x0` instead of `0x1`.
+    In the same way other functions need to be adjusted.
+    The root detection and debuggable detection should return `0x0` instead of `0x1`.
 
-4. Repackage app using command:
+4. Repackaging app using command:
+
+    The smali code must be packed in an apk file, it should be done with command:
 
     ```console
     apktool b -f -d UnCrackable-Level1
     ```
 
-5. After recompiling new build is available inside dist directory
+5. After repackaging new build is available inside dist directory
 
-    Path: ```/UnCrackable-Level1/dist/UnCrackable-Level1.apk```
+    Path: 
+    ```console
+    /UnCrackable-Level1/dist/UnCrackable-Level1.apk
+    ```
 
-6. Repackaging the app with your Certificate
+6. Installing the app with new Certificate
 
-    Inorder to be able to install app again we need to sign it with our new certificate.
+    Inorder to be able to install app again, the app need to re-signed it with new certificate.
 
-    - Create certificate 
-        ```
+    - Create new Certificate 
+        ```console
         keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
         ```
     - Sign app with certificate
-        ```
+        ```console
         jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore UnCrackable-Level1.apk alias_name
         ```
     - Install app to emulators
-        ```
+        ```console
         adb install UnCrackable-Level1.apk
         ```
       
-7. Our app is displaying always success alert.
+7. App should be displaying always success alert, after pressing the verify button.
