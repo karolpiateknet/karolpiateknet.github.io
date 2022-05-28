@@ -66,7 +66,7 @@ compress_html:
 defaults:
   # _posts
   - scope:
-      path: "/_posts/"
+      path: ""
       type: posts
     values:
       layout: single
@@ -75,11 +75,4 @@ defaults:
       comments: false
       share: true
       related: true
-  # _pages
-  - scope:
-      path: ""
-      type: pages
-    values:
-      layout: single
-      author_profile: true
       classes: wide
