@@ -507,11 +507,17 @@ Path: ```/UnCrackable-Level1/dist/UnCrackable-Level1.apk```
 
 Inorder to be able to install app again we need to sign it with our new certificate.
 
-  6.1 Create certificate 
-      ```keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000```
-  6.2 Sign app with certificate
-      ```jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore UnCrackable-Level1.apk alias_name```
-  6.3 Install app to emulators
-      ```adb install UnCrackable-Level1.apk```
+- Create certificate 
+    ```
+    keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+    ```
+- Sign app with certificate
+    ```
+    jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore UnCrackable-Level1.apk alias_name
+    ```
+- Install app to emulators
+    ```
+    adb install UnCrackable-Level1.apk
+    ```
       
 8. Our app is displaying always success alert.
