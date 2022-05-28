@@ -7,6 +7,7 @@ name                     : "Karol Piątek"
 description              : "iOS development, mobile security, development cycle"
 author_profile           : true
 timezone: "Poland"
+breadcrumbs: true
 
 search                   : true
 lunr:
