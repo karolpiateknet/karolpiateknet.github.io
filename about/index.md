@@ -12,8 +12,7 @@ In my experience I worked on multiple projects like:
 
 # 🌱 Skills I'm currently working on
 - iOS modularization
-- Android security
-- [Frida](https://github.com/frida/frida)
+- Core Data
 
 # 👷 My contributions
 
