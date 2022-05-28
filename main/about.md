@@ -12,8 +12,6 @@ In my experience I worked on multiple projects like:
 - IoT smart home app
 - and more
 
-You can see more details about my experience in [my LinkedIn Profile](https://www.linkedin.com/in/karolpiatek/)
-
 # 🌱 Skills I'm currently working on
 - iOS modularization
 - Android security
