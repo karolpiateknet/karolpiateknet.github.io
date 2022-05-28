@@ -78,9 +78,9 @@ defaults:
       classes: wide
   # _pages
   - scope:
-        path: "/about/"
-        type: pages
+      path: "/about/"
+      type: pages
     values:
-        layout: single
-        author_profile: true
-        classes: wide
+      layout: single
+      author_profile: true
+      classes: wide
