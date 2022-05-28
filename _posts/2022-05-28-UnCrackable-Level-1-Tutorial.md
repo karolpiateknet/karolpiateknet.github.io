@@ -440,84 +440,84 @@ Let's see how we can achieve that.
 
 1. First we need to decompile apk file using command:
 
-`apktool d UnCrackable-Level1.apk`
+  `apktool d UnCrackable-Level1.apk`
 
-We will receive the application smali code with project structure:
+  We will receive the application smali code with project structure:
 
-![Project structure](/assets/images/posts/UnCrackable1/uncrackable1-project-structure.png)
+  ![Project structure](/assets/images/posts/UnCrackable1/uncrackable1-project-structure.png)
 
-As we can see structure is basically the same as it was with jadx tool.
+  As we can see structure is basically the same as it was with jadx tool.
 
 2. Find proper smali a.smali file
 
-As previously we need to return false inside root detection functions and secret check function.
-Inside uncrakable1 directory we can see the a.smali file there which contains the secret check function.
+  As previously we need to return false inside root detection functions and secret check function.
+  Inside uncrakable1 directory we can see the a.smali file there which contains the secret check function.
 
-The method is quite long comparing to Java code:
+  The method is quite long comparing to Java code:
 
-```
-.method public static a(Ljava/lang/String;)Z
-    .locals 5
+  ```
+  .method public static a(Ljava/lang/String;)Z
+      .locals 5
 
-    const-string v0, "8d127684cbc37c17616d806cf50473cc"
+      const-string v0, "8d127684cbc37c17616d806cf50473cc"
 
-    const-string v1, "5UJiFctbmgbDoLXmpL12mkno8HT4Lv8dlat8FxR2GOc="
+      const-string v1, "5UJiFctbmgbDoLXmpL12mkno8HT4Lv8dlat8FxR2GOc="
 
-    const/4 v2, 0x0
+      const/4 v2, 0x0
 
-    invoke-static {v1, v2}, Landroid/util/Base64;->decode(Ljava/lang/String;I)[B
-...
-...
-...
-    return p0
-.end method
-```
+      invoke-static {v1, v2}, Landroid/util/Base64;->decode(Ljava/lang/String;I)[B
+  ...
+  ...
+  ...
+      return p0
+  .end method
+  ```
 
-But we know that we just need to return the true.
+  But we know that we just need to return the true.
 
 4. Change comparison to always true
 
-After changing behaviour to always return true the function will look like this:
+  After changing behaviour to always return true the function will look like this:
 
-```
-.method public static a(Ljava/lang/String;)Z
-    .locals 5
+  ```
+  .method public static a(Ljava/lang/String;)Z
+      .locals 5
 
-    /// Create true value.
-    const/4 v0, 0x1
+      /// Create true value.
+      const/4 v0, 0x1
 
-    /// Return created value.
-    return v0
-.end method
-```
+      /// Return created value.
+      return v0
+  .end method
+  ```
 
-In the same way we need to bypass the root detection and debuggable detection, but just return `0x0` instead of `0x1`.
+  In the same way we need to bypass the root detection and debuggable detection, but just return `0x0` instead of `0x1`.
 
 4. Repackage app using command:
 
-```console
-apktool b -f -d UnCrackable-Level1
-```
+  ```console
+  apktool b -f -d UnCrackable-Level1
+  ```
 
 5. After recompiling new build is available inside dist directory
 
-Path: ```/UnCrackable-Level1/dist/UnCrackable-Level1.apk```
+  Path: ```/UnCrackable-Level1/dist/UnCrackable-Level1.apk```
 
 7. Repackaging the app with your Certificate
 
-Inorder to be able to install app again we need to sign it with our new certificate.
+  Inorder to be able to install app again we need to sign it with our new certificate.
 
-- Create certificate 
-    ```
-    keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
-    ```
-- Sign app with certificate
-    ```
-    jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore UnCrackable-Level1.apk alias_name
-    ```
-- Install app to emulators
-    ```
-    adb install UnCrackable-Level1.apk
-    ```
+  - Create certificate 
+      ```
+      keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+      ```
+  - Sign app with certificate
+      ```
+      jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore UnCrackable-Level1.apk alias_name
+      ```
+  - Install app to emulators
+      ```
+      adb install UnCrackable-Level1.apk
+      ```
       
 8. Our app is displaying always success alert.
