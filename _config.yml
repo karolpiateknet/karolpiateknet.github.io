@@ -17,7 +17,7 @@ twitter:
 # Site Author
 author:
   name             : "Karol Piątek"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/emoji.png"
   bio              : "I'm Senior iOS developer with over 4 years of experience in iOS development. I'm highly interested in mobile security and constantly working on those skills."
   location         : "Remote"
   links:
