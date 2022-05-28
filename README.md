@@ -1,1 +1,1 @@
-# [Swifty Friday](karolpiateknet.github.io)
+# [Swifty Friday](https://karolpiateknet.github.io)
