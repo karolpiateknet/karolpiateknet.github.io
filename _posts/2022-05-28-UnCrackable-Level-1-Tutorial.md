@@ -1,4 +1,9 @@
-# Android Security UnCrackable Level 1
+---
+layout: post
+title: UnCrackable Level 1 tutorial
+tags: android security
+---
+
 This repository contains a complete tutorial on how to solve UnCrackable Level 1 in different ways to get the hidden key, but we will also bypass checks just to get the success Alert in different ways.
 
 Objective: A secret string is hidden somewhere in this app. Find a way to extract it.
