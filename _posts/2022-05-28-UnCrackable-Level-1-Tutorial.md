@@ -270,7 +270,7 @@ frida -U -l UncrackableLevel1.js  -f owasp.mstg.uncrackable1
 ```
 
 Where `UncrackableLevel1.js` is a file which contains frida script.
-It will be created in [section](#frida-code)
+It will be created in [section](#complete-frida-code---uncrackablelevel1js)
 
 #### Pro tips
 
@@ -342,7 +342,7 @@ function overrideExit () {
 
 ### Decryption function
 
-The hidden secret can be decrypted in the same way as it is done in [Solution 1](#solution-1-find-the-comparison-method-and-print-out-the-key).
+The hidden secret can be decrypted in the same way as it is done in [Solution 1](#solution-1-find-the-keys-comparison-method-and-print-out-the-secret-key).
 Script has to run all decrypting methods as it is done in the orginal code and return the hidden value.
 
 Decryption script:
@@ -454,7 +454,7 @@ Apktool decodes the application code to [smali](https://github.com/JesusFreke/sm
 
 ### Solution
 
-similarly to [Frida solution](### Bypass value check function) apktool can change code and bypass root detection and secret check function to get the success alert.
+similarly to [Frida solution](#bypass-value-check-function) apktool can change code and bypass root detection and secret check function to get the success alert.
 
 1. Firstly apk file have to be decompiled with command:
 
