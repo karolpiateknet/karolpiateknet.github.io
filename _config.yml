@@ -23,7 +23,7 @@ author: Karol Piatek
 footer:
   links:
     - label: "LinkedIn"
-      icon: "fa-brands fa-linkedin"
+      icon: "fab fa-linkedin-in"
       url: "https://www.linkedin.com/in/karolpiatek/"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
