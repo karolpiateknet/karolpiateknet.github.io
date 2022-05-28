@@ -1,7 +1,10 @@
 ---
 layout: post
 title: UnCrackable Level 1 tutorial
+author_profile: true
 ---
+
+# Introduction
 
 This repository contains a complete tutorial on how to solve UnCrackable Level 1 in different ways to get the hidden key, but we will also bypass checks just to get the success Alert in different ways.
 
@@ -503,6 +506,4 @@ Inorder to be able to install app again we need to sign it with our new certific
   6.3 Install app to emulators
       `adb install UnCrackable-Level1.apk`
       
-8. Our app is displaying always success alert.      
-
-
+8. Our app is displaying always success alert.
