@@ -6,6 +6,7 @@ title_separator          : "-"
 name                     : "Karol Piątek"
 description              : "iOS development, mobile security, development cycle"
 author_profile           : true
+timezone: "Poland"
 
 search                   : true
 lunr:
@@ -23,7 +24,7 @@ author:
   location         : "Remote"
   links:
     - label: "LinkedIn"
-      icon: "fab fa-linkedin-in"
+      icon: "fa-brands fa-linkedin"
       url: "https://www.linkedin.com/in/karolpiatek/"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
@@ -36,7 +37,7 @@ author:
 footer:
   links:
     - label: "LinkedIn"
-      icon: "fab fa-linkedin-in"
+      icon: "fa-brands fa-linkedin"
       url: "https://www.linkedin.com/in/karolpiatek/"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
@@ -87,6 +88,7 @@ defaults:
       comments: false
       share: true
       related: true
+      show_date: true
   # _pages
   - scope:
       path: ""
