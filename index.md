@@ -1,5 +1,3 @@
-# Blogposts
-
 iOS development, mobile security, development cycle
 
 ## [Hard-coded Tokens, Keys and Credentials in Mobile Apps](https://www.netguru.com/blog/hardcoded-keys-storage-mobile-app)
