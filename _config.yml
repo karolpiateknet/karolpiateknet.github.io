@@ -5,6 +5,7 @@ title                    : "Swifty Friday Blog"
 title_separator          : "-"
 name                     : "Karol Piątek"
 description              : "iOS development, mobile security, development cycle"
+author_profile           : true
 
 search                   : true
 lunr:
