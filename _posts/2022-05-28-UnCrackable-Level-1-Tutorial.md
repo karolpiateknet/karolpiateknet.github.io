@@ -2,6 +2,8 @@
 layout: single
 title: UnCrackable Level 1 tutorial
 author_profile: true
+permalink: /:categories/:title/
+tags: Android security mobile
 ---
 
 Uncrakable apps are one of the most popular mobile reverse engineering challenges.
