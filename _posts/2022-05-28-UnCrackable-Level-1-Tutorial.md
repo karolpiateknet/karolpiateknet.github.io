@@ -475,7 +475,7 @@ Let's see how we can achieve that.
 
   But we know that we just need to return the true.
 
-4. Change comparison to always true
+3. Change comparison to always true
 
   After changing behaviour to always return true the function will look like this:
 
@@ -503,7 +503,7 @@ Let's see how we can achieve that.
 
   Path: ```/UnCrackable-Level1/dist/UnCrackable-Level1.apk```
 
-7. Repackaging the app with your Certificate
+6. Repackaging the app with your Certificate
 
   Inorder to be able to install app again we need to sign it with our new certificate.
 
@@ -520,4 +520,4 @@ Let's see how we can achieve that.
       adb install UnCrackable-Level1.apk
       ```
       
-8. Our app is displaying always success alert.
+7. Our app is displaying always success alert.
