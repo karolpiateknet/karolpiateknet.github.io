@@ -1,6 +1,6 @@
 ---
 layout: single
-title: How to save millions in software development: part 1
+title: "How to save millions in software development: Part 1"
 author_profile: true
 permalink: /:categories/:title/
 tags: scrum development
