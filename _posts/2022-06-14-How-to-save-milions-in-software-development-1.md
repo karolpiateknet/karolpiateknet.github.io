@@ -22,7 +22,7 @@ A Big part of software development is the creation of requirements and tickets. 
 
 ![Swing three](/assets/images/posts/How-to-save-millions/swing-tree.jpeg) 
 
-Image source: https://imgur.com/3O2kOG4
+Image source: [https://imgur.com/3O2kOG4](https://imgur.com/3O2kOG4)
 
 Remember that ambiguity on the refinement level is normal, but when a ticket is in the scrum sprint, I believe that it should be defined as detailed as possible to save time, which could be spent more productively by reading about new exciting tech solutions.
 
@@ -32,9 +32,9 @@ Remember that ambiguity on the refinement level is normal, but when a ticket is 
 
 Such unclear ticket comes with quite a few questions, to clarify things:
 
-    - On which screen should User be able to remove the article? Maybe an article could be removed with a swipe gesture or with the remove button on the details screen. 
-    - Should I implement a confirmation alert?
-    - Where can I find the design?
+   - On which screen should User be able to remove the article? Maybe an article could be removed with a swipe gesture or with the remove button on the details screen. 
+   - Should I implement a confirmation alert?
+   - Where can I find the design?
 
 As you can see, a simple ticket to remove an article can cause a lot of confusion. If the ticket were more complex, the list of questions would be much, much longer. Working with such tickets will generally result in additional work unless you’re the one who created the ticket and you remember all the details about it.
 
@@ -79,7 +79,7 @@ ButtonView could be used to match the design with Style.negative option.
 
 ### Link to design:
 
-https://www.figma.com 
+[https://www.figma.com](https://www.figma.com )
 
 ### QA tips:
 
@@ -87,16 +87,16 @@ Creating articles requires a special admin account using “Admin account” fro
 
 ### ✅ Acceptance criteria:
 
-Dev ✅  / :x: | QA ✅  / :x: | Requirement | Comment
+Dev | QA | Requirement | Comment
 :---: | :---: | --- | --- 
-✅ | | Delete button is present on the article details screen. | 
-:x: | | It has the correct design | Link to design.
- | | After tapping the delete button confirmation alert is displayed. |
- | | Delete confirmation alert has correct design | Link to design.
- | | On delete confirmation alert: Cancel button dismisses alert and articles details are visible. | 
- | | On delete confirmation alert: Remove button dismiss alert and close article details screen. |
- | | After article removal: Removed article is not visible on the articles list. |
- | | All texts are localized |
+ ✅ | ✅ | Delete button is present on the article details screen. | 
+ :x: | :x: | It has the correct design | Link to design.
+ ✅ | ✅ | After tapping the delete button confirmation alert is displayed. |
+ ✅ | ✅ | Delete confirmation alert has correct design | Link to design.
+ ✅ | ✅ | On delete confirmation alert: Cancel button dismisses alert and articles details are visible. | 
+ ✅ | ✅ | On delete confirmation alert: Remove button dismiss alert and close article details screen. |
+ ✅ | ✅ | After article removal: Removed article is not visible on the articles list. |
+ ✅ | ✅ | All texts are localized |
 
 It is a huge difference, right? A little more time put into the ticket creation can help you to save it later on. For me writing detailed tickets also force me to analyze the ticket in-depth and clarify things that I’m not sure about or discover some blockers or dependencies, that should be done first.
 
@@ -106,12 +106,12 @@ Also remember that you will not gather 100% requirements all the time, before im
 
 We want to optimize our work, not increase it. To do that we should set some goals, which we would like to achieve and observe some metrics:
 
-    - The number of unknown things in tickets, that come up during development has been decreased
-    - The Number of bugs has been decreased
-    - QA team has the higher capacity
-    - Average number of story points done by team has increased
-    - Precision of the planning has been increased, due to more clear requirements
-    - Happiness index has increased due to less frustration about ambiguous tickets
+   - The number of unknown things in tickets, that come up during development has been decreased
+   - The Number of bugs has been decreased
+   - QA team has the higher capacity
+   - Average number of story points done by team has increased
+   - Precision of the planning has been increased, due to more clear requirements
+   - Happiness index has increased due to less frustration about ambiguous tickets
 
 This approach might not work in every case. That's why you should define clear goals that you would like to achieve and measure their progress.
 
