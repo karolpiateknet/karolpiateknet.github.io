@@ -115,7 +115,7 @@ We want to optimize our work, not increase it. To do that we should set some goa
 
 This approach might not work in every case. That's why you should define clear goals that you would like to achieve and measure their progress.
 
-#Summary
+# Summary
 
 In my experience, well-described tickets save a lot of time and frustration. Since when you put a ticket into the sprint, you should know what should be done in the scope of it, it will also help you define clear requirements. Even if you are the one, who is responsible for creating the ticket, you should not rely solely on your memory. There is always a possibility that you will miss something important, and the circle of "this is supposed to be a simple task" repeats.
 
