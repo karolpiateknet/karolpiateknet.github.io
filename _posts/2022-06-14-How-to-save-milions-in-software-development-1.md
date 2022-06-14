@@ -6,8 +6,6 @@ permalink: /:categories/:title/
 tags: scrum development
 ---
 
-# Intro
-
 In every industry some things could improve the workflow in terms of accuracy, speed, or decreasing the amount of unnecessary work. If a developer wastes 20 minutes daily with a $60 per hour rate, it is:
 
   - $20 daily
@@ -16,7 +14,7 @@ In every industry some things could improve the workflow in terms of accuracy, s
 
 Taking that into account, the company which employs 1 000 developers would lose $4.8 mln yearly. In this blog post, I will try to raise a yellow flag at some things in software development, that in my opinion are unnecessarily expensive and could be improved.
 
-Remember that many 1% improvements can make a big difference in the long run: https://jamesclear.com/marginal-gains
+Remember that many 1% improvements can make a big difference in the long run: [https://jamesclear.com/marginal-gains](https://jamesclear.com/marginal-gains)
 
 # Tickets
 
