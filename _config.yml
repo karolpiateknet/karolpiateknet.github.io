@@ -21,12 +21,12 @@ twitter:
   username               : "karolpiateknet"
 
 ## Analytics
-# TODO
-#analytics:
-#  provider               : "google-gtag" # false (default), "google", "google-universal", "google-gtag", "custom"
-#  google:
-#    tracking_id          : "TODO"
-#    anonymize_ip         : false
+
+analytics:
+  provider               : "google"
+  google:
+    tracking_id          : "G-KQVSRM7GWS"
+    anonymize_ip         : true
 
 # Site Author
 author: Karol Piatek
