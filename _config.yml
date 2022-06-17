@@ -20,14 +20,6 @@ lunr:
 twitter:
   username               : "karolpiateknet"
 
-## Analytics
-
-analytics:
-  provider               : "google"
-  google:
-    tracking_id          : "G-KQVSRM7GWS"
-    anonymize_ip         : true
-
 # Site Author
 author: Karol Piatek
 
@@ -112,6 +104,7 @@ plugins:
   - jemoji
   - jekyll-include-cache
   - jekyll-redirect-from
+  - jekyll-analytics
   
 # mimic GitHub Pages with --safe
 whitelist:
@@ -156,3 +149,8 @@ defaults:
     values:
       layout: single
       author_profile: true
+      
+jekyll_analytics:
+  GoogleAnalytics:
+    id: G-KQVSRM7GWS
+    anonymizeIp: false
