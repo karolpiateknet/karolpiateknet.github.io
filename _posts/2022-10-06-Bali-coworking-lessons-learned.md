@@ -6,8 +6,6 @@ permalink: /:categories/:title/
 tags: travel work
 ---
 
-# Intro
-
 In September, I was working remotely from Bali as a software engineer. It was the first time when I worked from a different place than the office or home. While working remotely from home for the last 3 years, working from coliving spaces, coworking spaces or hotels was very challenging in some aspects. I would like to share lessons learned and the pros & cons of such a journey.
 
 # Internet problems
@@ -16,13 +14,12 @@ Coworking places are promoted with the super-fast internet connection even 500 M
 
 Lessons learned:
 
-    - Get an apartment with 100+ Mb / s internet instead of a coworking pass, you will get a more stable connection divided by fewer people.
-    - Test coworking places using a 1-day access pass, in some places it is free.
-    - Choose places with an internet connection speed of 300+ MB / s.
-    - If you get connection issues, ask staff to fix them. If they can’t fix it, it might be a sign to change the coworking place.
-    - You might change the room to get the internet connection from a different access point.
-    - If you don’t provide a good quality internet connection, video or screen presentation might be really slow or not possible.
-
+- Get an apartment with 100+ Mb / s internet instead of a coworking pass, you will get a more stable connection divided by fewer people.
+- Test coworking places using a 1-day access pass, in some places it is free.
+- Choose places with an internet connection speed of 300+ MB / s.
+- If you get connection issues, ask staff to fix them. If they can’t fix it, it might be a sign to change the coworking place.
+- You might change the room to get the internet connection from a different access point.
+- If you don’t provide a good quality internet connection, video or screen presentation might be really slow or not possible.
 
 # Events in coworking places
 
@@ -32,14 +29,13 @@ It is not a problem in a coliving place, because you can just go to your room an
 
 Lessons learned:
 
-    - If you use the coworking place, check the place calendar, if you have a call while there is an integration book a private call room.
+- If you use the coworking place, check the place calendar, if you have a call while there is an integration book a private call room.
 
 # Work-life balance
  
 In Poland I usually work from 8 AM till 4 PM and it is quite common for me to think after work about work. When I was working in Bali I used to start work at 2-3 PM and finish at 10-11 PM. Thanks to that I did not have much time to think about work after it and I was getting up with a fresh mind. Starting work in the afternoon has more benefits in the winter when it is getting dark quite fast you could make use of all the daylight and work most of the time at night. And of course, visiting such a beautiful place as Bali encouraged me to explore it.
 
 I have also spotted a performance increase. In the mornings we sometimes are not on “Full speed”, while when working from 2 - 3 PM I was always ready to rock! and since I finished quite early 10 - 11 PM I was not tired at the end of the work. So it might have some positive impact on work.
-
 
 # Summary
 
