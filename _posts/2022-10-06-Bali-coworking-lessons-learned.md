@@ -12,7 +12,7 @@ In September, I was working remotely from Bali as a software engineer. It was th
 
 Coworking places are promoted with the super-fast internet connection even 500 Mb / s. In our experience, we got 130 MB / s maximum speed in one place, but the lowest speed we got in that place was 1 MB / s. After reporting that to the staff, they informed us that someone is downloading a really big file and they decreased the internet connection for that person. I think it should be solved by default and people should be able to download files, but without taking down the entire network. Coworking places also have multiple access points with a divided network between them, so changing the room and restarting the connection might help you get full speed again. Sadly in most places staff will only tell you to restart your computer or internet connection without solving the actual problem.
 
-Lessons learned:
+**Lessons learned:**
 
 - Get an apartment with 100+ Mb / s internet instead of a coworking pass, you will get a more stable connection divided by fewer people.
 - Test coworking places using a 1-day access pass, in some places it is free.
@@ -27,7 +27,7 @@ A lot of coworking places offers integrations like dinner, speed dating, pool pa
 
 It is not a problem in a coliving place, because you can just go to your room and have the same internet connection as in a shared space. 
 
-Lessons learned:
+**Lessons learned:**
 
 - If you use the coworking place, check the place calendar, if you have a call while there is an integration book a private call room.
 
@@ -39,4 +39,4 @@ I have also spotted a performance increase. In the mornings we sometimes are not
 
 # Summary
 
-Working and traveling might be really challenging, but I think it is possible to do it for a whole year. As with remote work, it was also challenging at first, but right now a lot of people work from home. Working and traveling will be for sure much more challenging, but you can definitely get over them if you will plan up front. I really recommend trying it out for some time! 
+Working and traveling might be really challenging, but I think it is possible to do it for a whole year. As with remote work, it was also challenging at first, but right now a lot of people work from home. Working and traveling will be for sure much more challenging, but you can definitely get over them if you will plan up front. **I really recommend trying it out for some time!**
