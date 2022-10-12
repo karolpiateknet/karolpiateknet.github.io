@@ -4,8 +4,8 @@ title: Bali coworking lessons learned
 author_profile: true
 permalink: /:categories/:title/
 tags: travel work
-image:
-  feature: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
+header:
+  teaser:/assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
   credit: Aleksandra Boldak
 ---
 In September, I was working remotely from Bali as a software engineer. It was the first time when I worked from a different place than the office or home. While working remotely from home for the last 3 years, working from coliving spaces, coworking spaces or hotels was very challenging in some aspects. I would like to share lessons learned and the pros & cons of such a journey.
