@@ -3,7 +3,7 @@ layout: single
 title: Bali coworking lessons learned
 header:
   overlay_image: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
-  image_description: "\n\n\n\n\n\n"
+  excerpt: "\n\n\n\n\n\n"
   teaser: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
   header: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
   caption: "Photo credit: Aleksandra Boldak"
