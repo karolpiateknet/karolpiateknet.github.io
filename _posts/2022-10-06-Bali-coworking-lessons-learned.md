@@ -2,7 +2,7 @@
 layout: single
 title: Bali coworking lessons learned
 header:
-  image: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
+  overlay_image: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
   teaser: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
   header: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
 author_profile: true
