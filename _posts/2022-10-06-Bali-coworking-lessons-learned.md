@@ -5,6 +5,7 @@ header:
   image: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
   teaser: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
   header: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
+  og_image: /assets/images/posts/Bali-coworking-lessons-learned/post-og-illustration.png
   caption: "Illustration credit: Aleksandra Boldak"
 author_profile: true
 permalink: /:categories/:title/
