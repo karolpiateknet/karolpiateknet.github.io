@@ -2,11 +2,10 @@
 layout: single
 title: Bali coworking lessons learned
 header:
-  overlay_image: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
-  excerpt: "\n \n \n \n \n \n"
+  image: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
   teaser: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
   header: /assets/images/posts/Bali-coworking-lessons-learned/post-main-illustration.png
-  caption: "Photo credit: Aleksandra Boldak"
+  caption: "Illustration credit: Aleksandra Boldak"
 author_profile: true
 permalink: /:categories/:title/
 tags: travel work
