@@ -68,6 +68,8 @@ In my opinion, it is better to use the Sourcery for Equatable conformance only i
 - We can automatically filter closures comparison from objects
 - In cases where we will have to add Equatable conformance manually, previously defined models in the production target will require to add this implementation also in the production target
 
+You can check out [how I added AutoEquatable in my BlogExample project](https://github.com/karolpiateknet/BlogExamples/commit/2f19089518a9cc52b522a68543d89d0346280b45).
+
 # Providing default values
 
 It is a similar story to Equatable conformance, it will introduce confusion when used because
