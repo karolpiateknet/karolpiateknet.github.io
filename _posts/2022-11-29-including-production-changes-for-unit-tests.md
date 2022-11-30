@@ -62,6 +62,7 @@ Conformance of Model to protocol 'Equatable' was already stated in the type's mo
 Thanks to that warning you will know that something has been changed and maybe Unit Tests should be adjusted.
 
 In my opinion, it is better to use the Sourcery for Equatable conformance only in Unit Tests, because:
+- If you are changing the Equatable implementation, you are sure that you will not break the Production code
 - We don’t introduce changes only needed by Unit Tests in production code
 - Equatable is only visible in the Unit Tests module
 - We get a warning when adding the conformance in production code and it is also added in Unit Tests
