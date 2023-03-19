@@ -12,7 +12,7 @@ In my experience I worked on multiple projects like:
 
 # 🌱 Skills I'm currently working on
 - iOS modularization
-- Core Data
+- SwiftUI & Combine
 
 # 👷 My contributions
 
@@ -40,10 +40,12 @@ In my experience I worked on multiple projects like:
 | Android security | ⭐⭐ | |
 | ARC | ⭐⭐⭐⭐⭐ | |
 | Autolayout | ⭐⭐⭐⭐⭐ | |
+| SwiftUI | ⭐⭐⭐ | |
 | UIKit | ⭐⭐⭐⭐⭐ | |
 | CI  | ⭐⭐⭐⭐ | Used Bitrise and Jenkins in commercial work |
 | Unit Tests | ⭐⭐⭐⭐⭐ | |
 | Quick/Nimble | ⭐⭐⭐⭐ | |
+| Combine | ⭐⭐⭐ | |
 | RxSwift | ⭐⭐⭐⭐ | |
 | UITests | ⭐⭐⭐ | |
 | Git | ⭐⭐⭐⭐⭐ | |
