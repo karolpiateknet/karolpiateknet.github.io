@@ -149,8 +149,3 @@ defaults:
     values:
       layout: single
       author_profile: true
-      
-jekyll_analytics:
-  GoogleAnalytics:
-    id: G-KQVSRM7GWS
-    anonymizeIp: false
