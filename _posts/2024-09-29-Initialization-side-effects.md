@@ -28,13 +28,10 @@ Let's analyze a ViewModel class as an example:
 ```swift
 final class ViewModel {
 
-
     var data: Data
-
 
     let fetchNetworkDataInteractor: FetchNetworkDataInteractorProtocol
     // ...
-
 
     init(fetchNetworkDataInteractor: FetchNetworkDataInteractorProtocol) {
         self.fetchNetworkDataInteractor = fetchNetworkDataInteractor
@@ -46,7 +43,6 @@ final class ViewModel {
             .disposed(by: disposeBag)
     }
 
-
     func fetchData() {
         fetchNetworkDataInteractor
             .fetchData()
@@ -56,10 +52,10 @@ final class ViewModel {
             .disposed(by: disposeBag)
     }
 
-
     func buttonClicked() {
         analytics.trackDidTapButton()
     }
+
 }
 ```
 
