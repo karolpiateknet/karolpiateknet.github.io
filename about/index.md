@@ -1,18 +1,8 @@
 
-I'm Senior iOS developer with over 5 years of experience in iOS development.
-I'm highly interested in mobile security and constantly working on those skills.
+I'm Staff iOS developer with over 7 years of experience in iOS development.
+Currently working on AI and work optimization.
 
-In my experience I worked on multiple projects like:
-- [MyTherapy: Medication Reminder](https://apps.apple.com/app/mytherapy-pill-reminder/id662170995)
-- Big and complex app that supports thousands of shop owners in Poland
-- Banking application for managing and uploading financial documents
-- FinTech app offering loans
-- IoT smart home app
-- and more
-
-# 🌱 Skills I'm currently working on
-- iOS modularization
-- SwiftUI & Combine
+[LinkedIn](https://www.linkedin.com/in/karolpiatek/)
 
 # 👷 My contributions
 
@@ -40,13 +30,13 @@ In my experience I worked on multiple projects like:
 | Android security | ⭐⭐ | |
 | ARC | ⭐⭐⭐⭐⭐ | |
 | Autolayout | ⭐⭐⭐⭐⭐ | |
-| SwiftUI | ⭐⭐⭐ | |
+| SwiftUI | ⭐⭐⭐⭐⭐ | |
 | UIKit | ⭐⭐⭐⭐⭐ | |
 | CI  | ⭐⭐⭐⭐ | Used Bitrise and Jenkins in commercial work |
 | Unit Tests | ⭐⭐⭐⭐⭐ | |
 | Quick/Nimble | ⭐⭐⭐⭐ | |
-| Combine | ⭐⭐⭐ | |
-| RxSwift | ⭐⭐⭐⭐ | |
+| Combine | ⭐⭐⭐⭐ | |
+| RxSwift | ⭐⭐⭐⭐⭐ | |
 | UITests | ⭐⭐⭐ | |
 | Git | ⭐⭐⭐⭐⭐ | |
 | Git flow | ⭐⭐⭐⭐⭐ | |
