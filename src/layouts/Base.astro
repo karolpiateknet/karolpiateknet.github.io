@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { title, description, ogImage, wide = false, redirectTo } = Astro.props;
-const fullTitle = title === 'Karol Piątek' ? title : `${title} - Karol Piątek`;
+const fullTitle = title === 'Karol Piątek' ? `${title} - Swifty Friday` : `${title} - Karol Piątek`;
 const desc = description ?? 'Staff iOS Engineer building agentic AI dev tools and automation.';
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).toString() : undefined;
@@ -30,11 +30,9 @@ const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).toString() : undefined
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
-    <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
-    <meta name="twitter:site" content="@karolpiateknet" />
     {redirectTo && <meta http-equiv="refresh" content={`0; url=${redirectTo}`} />}
     {redirectTo && <link rel="canonical" href={redirectTo} />}
-    <link rel="alternate" type="application/rss+xml" title="Karol Piątek" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Swifty Friday" href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/png" href="/assets/images/emoji.png" />
   </head>

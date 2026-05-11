@@ -6,8 +6,8 @@ export async function GET(context: APIContext) {
   const posts = await getCollection('posts');
   const sorted = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   return rss({
-    title: 'Karol Piątek',
-    description: 'Engineering velocity, AI dev tooling, iOS architecture.',
+    title: 'Karol Piątek - Swifty Friday',
+    description: 'Notes from Karol Piątek on engineering velocity, AI dev tooling, and iOS architecture.',
     site: context.site!,
     items: sorted.map((post) => ({
       title: post.data.title,

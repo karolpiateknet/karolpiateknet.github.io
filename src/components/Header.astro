@@ -4,7 +4,10 @@ const isHome = pathname === '/' || pathname === '';
 ---
 <header class="site-header">
   <div class="site-header__inner">
-    <a href="/" class="site-header__brand">Karol Piątek</a>
+    <a href="/" class="site-header__brand">
+      <span class="site-header__name">Karol Piątek</span>
+      <span class="site-header__site">Swifty Friday</span>
+    </a>
     <nav class="site-nav" aria-label="Primary">
       <a href="/" aria-current={isHome ? 'page' : undefined}>Writing</a>
       <a href="/about" aria-current={pathname.startsWith('/about') ? 'page' : undefined}>About</a>
