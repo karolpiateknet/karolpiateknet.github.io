@@ -1,0 +1,48 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  wide?: boolean;
+  redirectTo?: string;
+}
+
+const { title, description, ogImage, wide = false, redirectTo } = Astro.props;
+const fullTitle = title === 'Karol Piątek' ? title : `${title} - Karol Piątek`;
+const desc = description ?? 'Staff iOS Engineer building agentic AI dev tools and automation.';
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).toString() : undefined;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    {!redirectTo && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:site" content="@karolpiateknet" />
+    {redirectTo && <meta http-equiv="refresh" content={`0; url=${redirectTo}`} />}
+    {redirectTo && <link rel="canonical" href={redirectTo} />}
+    <link rel="alternate" type="application/rss+xml" title="Karol Piątek" href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" type="image/png" href="/assets/images/emoji.png" />
+  </head>
+  <body>
+    <Header />
+    <main class={wide ? 'wide' : ''}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const posts = await getCollection('posts');
+const tagCounts = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    const key = tag.toLowerCase();
+    tagCounts.set(key, (tagCounts.get(key) ?? 0) + 1);
+  }
+}
+const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+---
+<Base title="Tags">
+  <h1>Tags</h1>
+  <p style="color: var(--color-fg-soft);">Browse posts by topic.</p>
+  <ul class="post-list">
+    {tags.map(([tag, count]) => (
+      <li class="post-list__item">
+        <h2 class="post-list__title"><a href={`/tags/${tag}`}>{tag}</a></h2>
+        <div class="post-list__meta">
+          <span>{count} {count === 1 ? 'post' : 'posts'}</span>
+        </div>
+      </li>
+    ))}
+  </ul>
+</Base>

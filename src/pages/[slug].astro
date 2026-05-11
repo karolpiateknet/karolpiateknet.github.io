@@ -1,0 +1,53 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const dateFormatted = post.data.date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const isoDate = post.data.date.toISOString();
+---
+<Base title={post.data.title} description={post.data.description} ogImage={post.data.image} redirectTo={post.data.redirectTo}>
+  <article>
+    <header class="post-header">
+      <h1>{post.data.title}</h1>
+      <div class="post-meta">
+        <time datetime={isoDate}>{dateFormatted}</time>
+        {post.data.tags.length > 0 && (
+          <span>
+            {post.data.tags.map((tag) => (
+              <a href={`/tags/${tag.toLowerCase()}`} class="tag-chip" style="margin-right: 0.35rem;">{tag}</a>
+            ))}
+          </span>
+        )}
+      </div>
+    </header>
+
+    {post.data.redirectTo && (
+      <div class="redirect-notice">
+        <strong>This post lives on an external site.</strong>{' '}
+        Read it on <a href={post.data.redirectTo}>{new URL(post.data.redirectTo).hostname}</a>. You're being redirected automatically.
+      </div>
+    )}
+
+    <div class="post-content">
+      <Content />
+    </div>
+
+    <footer class="post-footer">
+      Written by Karol Piątek - find me on <a href="https://www.linkedin.com/in/karolpiatek/">LinkedIn</a> or <a href="https://github.com/karolpiateknet">GitHub</a>.
+    </footer>
+  </article>
+</Base>

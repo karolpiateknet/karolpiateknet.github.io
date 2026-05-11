@@ -1,0 +1,19 @@
+{
+  "name": "swiftyfriday",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.13",
+    "@astrojs/sitemap": "^3.6.0",
+    "astro": "^5.14.0",
+    "remark-gemoji": "^8.0.0"
+  }
+}

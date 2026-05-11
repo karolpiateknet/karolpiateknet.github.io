@@ -1,0 +1,17 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+---
+<Base title={frontmatter.title} description={frontmatter.description}>
+  <article class="post-content">
+    <slot />
+  </article>
+</Base>
