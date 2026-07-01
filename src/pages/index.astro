@@ -5,16 +5,6 @@ import Base from '../layouts/Base.astro';
 const allPosts = (await getCollection('posts'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-const featuredSlugs = [
-  'Initialization-side-effects',
-  'How-to-save-milions-in-software-development-1',
-  'including-production-changes-for-unit-tests',
-];
-
-const featured = featuredSlugs
-  .map((slug) => allPosts.find((p) => p.id === slug))
-  .filter(Boolean);
-
 const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
 <Base title="Karol Piątek" description="Karol Piątek - Staff iOS Engineer building AI dev tools and automation. Writing at Swifty Friday.">
@@ -25,21 +15,6 @@ const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month:
       I'm a Staff iOS Engineer at TransferGo. My day job is making AI useful inside an engineering team - agents, custom skills, automated reviews. This site is where I write about it.
     </p>
     <a href="/about" class="hero__cta">More about me</a>
-  </section>
-
-  <section>
-    <p class="section-eyebrow">Featured</p>
-    <ul class="post-list">
-      {featured.map((post) => (
-        <li class="post-list__item">
-          <h2 class="post-list__title"><a href={`/${post!.id}`}>{post!.data.title}</a></h2>
-          <div class="post-list__meta">
-            <time datetime={post!.data.date.toISOString()}>{fmt(post!.data.date)}</time>
-          </div>
-          {post!.data.description && <p class="post-list__excerpt">{post!.data.description}</p>}
-        </li>
-      ))}
-    </ul>
   </section>
 
   <section>
@@ -57,6 +32,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month:
               <a href={`/tags/${tag.toLowerCase()}`} class="tag-chip">{tag}</a>
             ))}
           </div>
+          {post.data.description && <p class="post-list__excerpt">{post.data.description}</p>}
         </li>
       ))}
     </ul>
