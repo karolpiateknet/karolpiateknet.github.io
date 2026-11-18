@@ -22,11 +22,3 @@ pnpm-debug.log*
 # editor
 .vscode/
 .idea/
-
-# legacy Jekyll cruft (kept on main, ignored on astro branch)
-_site/
-.sass-cache/
-.bundle/
-.jekyll-cache/
-.jekyll-metadata
-vendor/
