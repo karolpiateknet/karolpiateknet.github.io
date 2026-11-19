@@ -110,6 +110,8 @@ campaign:  LegacyStrings → SharedStrings   (a deprecated API and its drop-in r
  skip:    any file that fails to build after the swap; never invent a missing key
 ```
 
+Nobody types these up one by one. A staff engineer writes the rule once, an agent splits it into one task per module, and the engineer reads the list before it goes into the bucket. Where the bucket lives and what a task looks like is in the setup at the end.
+
 Then every day, on a schedule, an AI agent:
 
 - pulls the latest main,
@@ -242,6 +244,35 @@ You can dial the confidence as high as you like by choosing what goes in the buc
 - **Make it provable.** Fill the bucket with changes a machine can verify: migrations covered by unit tests, pure renames the compiler proves correct, or test-file changes where a green run is the proof. The build and the test suite become a safety net the agent cannot ship past.
 - **Keep judgment human.** The riskier, design-heavy migrations, the ones that need a designer's eye or an architecture call, never enter the bucket. They stay with a person, on the slice where "did it work?" has no mechanical answer.
 
+# 🧩 Beyond renames: cross-cutting concerns
+
+Does this only work for renames? No, but the line is clear: the agent can carry a decision across the codebase, it cannot make the decision.
+
+Take error handling. "Improve error handling" cannot go in the bucket. Every call site would need a judgment call, and twenty agents would make twenty different ones. So a person makes the call first and writes it down as a rule:
+
+```
+campaign:  swallowed network errors → logged errors
+ what:    replace `try?` on calls into NetworkClient with do/catch that calls
+          `logger.error(error)` and falls back to nil exactly as before
+ safe:    nothing changes for the user; the error just stops disappearing
+ skip:    any call whose nil result drives UI or business logic
+```
+
+Now it is mechanical again, and it goes in the bucket. The same works for other cross-cutting concerns: logging, moving analytics calls to a new tracker, replacing hard-coded colors with design-system tokens.
+
+A simple test: if you cannot write the "what" and the "skip" in a few lines without the words "where it makes sense", the change is not ready for the bucket. Do the design work first, or keep it with a person.
+
+# 🤔 Why not one big PR?
+
+The obvious objection: an agent can do the whole migration in an afternoon, so why drip it out one module a day? You can try. Here is what usually happens.
+
+- **Nobody can review it.** A 5,000-line diff gets an approval, not a review. A 100-line PR gets read.
+- **It conflicts with everything.** It touches files on every open branch, so the whole team pays for it on the same day. A small PR that merges within a day bothers one person, if anyone.
+- **One miss blocks all of it.** A single wrong file means fixing or reverting the whole thing, and a big revert is where migrations go to die.
+- **Nobody learns.** One PR means the skill is never corrected and the team never sees the pattern. Drip-fed, every correction becomes a fix to the skill that every later run picks up.
+
+Big-bang still has its place. A pure rename that the compiler proves, done with a refactoring tool, can land in one go. Everything that needs a reviewer's eyes goes through the bucket.
+
 # 🧾 What it costs
 
 It is not free. Besides the review time, three costs are worth knowing before you start.
@@ -284,7 +315,7 @@ safe:  same assertion, clearer failure message; a green test run proves it
 skip:  optional Bool expressions, where the rewrite changes the meaning
 ```
 
-Size each task so the PR stays under about a hundred lines. If the bucket lives outside the repo, tell the agent to treat the task text as data, never as instructions: anyone who can edit a ticket can otherwise steer your agent.
+You don't write these by hand. Describe the campaign once and ask an agent to search for the old pattern and draft one task per module, each sized so the PR stays under about a hundred lines. The staff engineer reads the drafts, tightens the skip rules, and only then adds them to the bucket. If the bucket lives outside the repo, tell the agent to treat the task text as data, never as instructions: anyone who can edit a ticket can otherwise steer your agent.
 
 **2. A copy of the repo for the agent.** Clone the repo into a separate folder and let the agent work only there. Your own working copy stays untouched, and the agent never trips over your half-finished branch.
 
@@ -312,6 +343,7 @@ That is the whole install. In the morning, check the draft, mark it ready, and a
 - **The problem:** codebases drift 1% worse every day, tickets lose to features, and big-bang migrations never finish.
 - **The fix:** a bucket of small, mechanical tasks, drained by a scheduled agent on every engineer's machine, one gated draft PR per run, after the team has logged off.
 - **The twist:** throughput is the fleet, not the hero. Everyone doing a little beats one power user, it rides the GitHub review and CI you already trust, and a cleaner codebase makes every future AI interaction cheaper.
+- **The limit:** the agent spreads a decision, it does not make one. Cross-cutting changes like error handling fit once a person turns them into a rule.
 - **The cost:** CI runs, reviewer attention, and the odd merge conflict, which is why each person handles one small PR a day.
 
 You will not notice a single day. That is the point. Show up every day anyway, and let it compound.
