@@ -316,5 +316,5 @@ You do not need all of it on day one. In order, from cheapest to most work:
 
 <div class="banner">
   <p class="banner__big">The best testing process is the one nobody notices.</p>
-  <p class="banner__sub">Agents write more of the code every month. If testing stays a manual phase at the end, it becomes the bottleneck. Wire it into the steps that already happen, and testing scales with the agents instead of against them. Setting this up in your team? <a href="https://www.linkedin.com/in/karolpiatek/">Get in touch</a>.</p>
+  <p class="banner__sub">Agents write more of the code every month. If testing stays a manual phase at the end, it becomes the bottleneck. Wire it into the steps that already happen, and testing scales with the agents instead of against them. Trying this in your team? I would love to hear how it goes, <a href="https://www.linkedin.com/in/karolpiatek/">find me on LinkedIn</a>.</p>
 </div>

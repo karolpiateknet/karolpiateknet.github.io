@@ -30,6 +30,14 @@ export const seriesLevels: SeriesLevel[] = [
     summary: 'Habits one engineer can start tomorrow, with no team buy-in.',
     steps: [
       {
+        title: 'Set up an agent for iOS: tool, Xcode, simulator and MCP',
+        blurb: 'What matters for iOS is an agent that can build, read errors and drive the simulator.',
+      },
+      {
+        title: 'Plan before you build',
+        blurb: 'A plan is cheap to review. A 600-line diff is not.',
+      },
+      {
         title: 'Green is not proof: make the agent prove its own tests',
         slug: 'prove-ai-written-tests',
         blurb: 'Tests that must fail first, reports that say what was not checked, and a video of every feature.',
@@ -39,12 +47,20 @@ export const seriesLevels: SeriesLevel[] = [
         blurb: 'A vague ticket used to cost a question. Now it costs a confidently wrong pull request.',
       },
       {
+        title: 'Context is a budget',
+        blurb: 'A short CLAUDE.md, skills loaded on demand, and what it does to cost and quality.',
+      },
+      {
         title: 'Shared instructions: one CLAUDE.md for the whole team',
         blurb: 'Instructions as team code in the repo, so every agent starts from the same map.',
       },
       {
         title: 'One skills folder, every tool',
         blurb: 'One folder of skills, symlinked into Claude Code, Codex and Cursor.',
+      },
+      {
+        title: 'Many things at once: parallel agents and overnight runs',
+        blurb: 'One task and an agent running for four hours is slow. Several tasks overnight and a morning of review is not.',
       },
     ],
   },
@@ -60,6 +76,10 @@ export const seriesLevels: SeriesLevel[] = [
       {
         title: 'Evals are not scary: ask the AI to test your skill',
         blurb: 'Five real cases, a fresh agent and one question: where did the skill get it wrong?',
+      },
+      {
+        title: 'Where agents fail on iOS, and the guardrail that stops each one',
+        blurb: 'Swift concurrency, SwiftUI quirks, new APIs and project files.',
       },
       {
         title: 'Every review comment you repeat is a bug in your guardrails',
@@ -83,6 +103,10 @@ export const seriesLevels: SeriesLevel[] = [
         blurb: 'Open the backend PR instead of filing the ticket.',
       },
       {
+        title: 'One agent, every repo',
+        blurb: 'Mobile, backend and design system in one task.',
+      },
+      {
         title: 'From crash to pull request',
         blurb: 'A crash alert turns into a draft PR with a failing test and a fix, for a human to check.',
       },
@@ -104,6 +128,10 @@ export const seriesLevels: SeriesLevel[] = [
       {
         title: 'The AI tooling engineer',
         blurb: 'Change the workflow once, and every agent on the team follows.',
+      },
+      {
+        title: 'Senior engineer, not senior iOS engineer',
+        blurb: 'Specialist on one platform, contributing to all of them.',
       },
       {
         title: 'Skills are code',

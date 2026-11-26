@@ -6,6 +6,7 @@ description: "Teams add an AI tool, write ten skills, and three months later see
 tldr:
   - "One skill, one AI reviewer or one agent alone gives a small, flat gain."
   - "Instructions, workflow, guardrails, testing, review, review mining and background refactoring each feed the next, and the gains compound."
+  - "It pays off when you run many tasks at once and overnight, not when you watch one agent for four hours."
   - "The first weeks feel like overhead, and somebody has to own the system like CI."
 ---
 
@@ -96,6 +97,16 @@ Then the loop closes. The weekly report gets shorter, because last month's rules
 
 It is the [1% rule](/migrate-codebase-with-ai) applied to the whole development process, not only the code.
 
+# 🔀 It pays off when you do many things at once
+
+Let me be blunt about one thing. If you work on one task at a time and watch an agent run for four hours, you will be slower than doing it yourself, and this whole system will look like overhead.
+
+The system pays off when you stop working that way. Several tasks in flight across different repos and projects. An agent left overnight on a well-briefed problem, so the morning is review instead of typing. Your job moves from writing every line to picking the work, writing good briefs and judging the results.
+
+That is also why the pieces above matter. Reviewing three overnight pull requests over coffee is only safe if the guardrails caught the boring mistakes, the agent [proved its own tests](/prove-ai-written-tests), and each PR comes with a recording of what was checked and what was not.
+
+It changes the role too. You stay a specialist on your platform, because that depth is what makes your review worth something. But with agents doing most of the typing, contributing to the other platforms and to the backend stops being exotic. The title that fits is closer to "senior engineer" than "senior iOS engineer".
+
 # 🗺️ The order to build it
 
 You do not need everything on day one. This is the order that has worked for me, with each step making the next one pay off:
@@ -120,9 +131,10 @@ In the teams where this works, a staff or platform engineer owns it the way they
 - **The reframe:** AI in a team is a system: instructions, workflow, guardrails, verification, review, review mining and background refactoring.
 - **The mechanism:** each part's output improves the next. Review becomes rules, rules guide agents, cleaner code means fewer corrections, and the loop compounds.
 - **The cost:** the first weeks feel like overhead. The payoff comes when the loop closes.
+- **The condition:** it pays off when you run many things at once, across repos and overnight, and spend your time on briefs and review.
 - **The owner:** someone has to keep the pieces connected, like CI.
 
 <div class="banner">
   <p class="banner__big">No single piece does miracles. Connected, they compound.</p>
-  <p class="banner__sub">Skills, guardrails, workflow, testing, review and refactoring, built as one system. Building this in your team? <a href="https://www.linkedin.com/in/karolpiatek/">Get in touch</a>.</p>
+  <p class="banner__sub">Skills, guardrails, workflow, testing, review and refactoring, built as one system. Trying this in your team? I would love to hear how it goes, <a href="https://www.linkedin.com/in/karolpiatek/">find me on LinkedIn</a>.</p>
 </div>
