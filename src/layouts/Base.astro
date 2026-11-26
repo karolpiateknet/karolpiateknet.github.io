@@ -16,6 +16,11 @@ const fullTitle = title === 'Karol Piątek' ? `${title} - Swifty Friday` : `${ti
 const desc = description ?? 'Staff iOS Engineer building agentic AI dev tools and automation.';
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).toString() : undefined;
+
+// Cloudflare Web Analytics: cookieless, so no consent banner is needed.
+// Paste the site token from Cloudflare dashboard > Analytics & Logs > Web Analytics.
+// The token is public (it ships in the page source). Empty = analytics off.
+const cloudflareAnalyticsToken = 'bd00af875b694171b55ddcc448196800';
 ---
 <!doctype html>
 <html lang="en">
@@ -35,6 +40,14 @@ const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).toString() : undefined
     <link rel="alternate" type="application/rss+xml" title="Swifty Friday" href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/png" href="/assets/images/emoji.png" />
+    {cloudflareAnalyticsToken && (
+      <script
+        is:inline
+        type="module"
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: cloudflareAnalyticsToken })}
+      ></script>
+    )}
   </head>
   <body>
     <Header />
