@@ -11,6 +11,7 @@ const posts = defineCollection({
     title: z.string(),
     date: z.coerce.date(),
     description: z.string().optional(),
+    tldr: z.array(z.string()).optional(),
     tags: z.array(z.string()).default([]),
     redirectTo: z.string().url().optional(),
     featured: z.boolean().default(false),

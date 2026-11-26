@@ -18,6 +18,15 @@ const dateFormatted = post.data.date.toLocaleDateString('en-US', {
   day: 'numeric',
 });
 const isoDate = post.data.date.toISOString();
+
+// TL;DR items allow `code` and **bold**; everything else is escaped.
+const inline = (text: string) =>
+  text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 <Base title={post.data.title} description={post.data.description} ogImage={post.data.image} redirectTo={post.data.redirectTo}>
   <article>
@@ -40,6 +49,15 @@ const isoDate = post.data.date.toISOString();
         <strong>This post lives on an external site.</strong>{' '}
         Read it on <a href={post.data.redirectTo}>{new URL(post.data.redirectTo).hostname}</a>. You're being redirected automatically.
       </div>
+    )}
+
+    {post.data.tldr && post.data.tldr.length > 0 && (
+      <aside class="tldr" aria-label="TL;DR">
+        <p class="tldr__label">TL;DR</p>
+        <ul>
+          {post.data.tldr.map((item) => <li set:html={inline(item)} />)}
+        </ul>
+      </aside>
     )}
 
     <div class="post-content">
