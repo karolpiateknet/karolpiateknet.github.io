@@ -257,7 +257,7 @@ The regression skill only looks at what the release changed. That is its strengt
 - **`/verify` and exploratory testing** on every change, by the agent and by people.
 - **The regression run** on everything the release changed.
 
-None of these is enough on its own. Together they cover each other's blind spots, and that is where the quality comes from.
+None of these is enough on its own. Together they cover each other's blind spots, and that is where the quality comes from. It is the same reason [AI in a team is a system, not a skill](/ai-is-a-system).
 
 # 🤖 Next: UI tests that almost write themselves
 

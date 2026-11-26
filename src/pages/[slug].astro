@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { allSteps, seriesPath, seriesTitle } from '../data/ai-series';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -11,6 +12,22 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+
+// Series position: the hub is "Start", the rest are numbered steps.
+// Prev/next skip steps whose post does not exist yet.
+const published = new Set((await getCollection('posts')).map((p) => p.id));
+const stepIndex = allSteps.findIndex((step) => step.slug === post.id);
+const inSeries = stepIndex !== -1;
+const stepLabel = stepIndex === 0 ? 'Start here' : `Step ${stepIndex} of ${allSteps.length - 1}`;
+const findLive = (from: number, dir: number) => {
+  for (let i = from + dir; i >= 0 && i < allSteps.length; i += dir) {
+    const step = allSteps[i];
+    if (step.slug && published.has(step.slug)) return step;
+  }
+  return undefined;
+};
+const prevStep = inSeries ? findLive(stepIndex, -1) : undefined;
+const nextStep = inSeries ? findLive(stepIndex, 1) : undefined;
 const { Content } = await render(post);
 const dateFormatted = post.data.date.toLocaleDateString('en-US', {
   year: 'numeric',
@@ -31,6 +48,9 @@ const inline = (text: string) =>
 <Base title={post.data.title} description={post.data.description} ogImage={post.data.image} redirectTo={post.data.redirectTo}>
   <article>
     <header class="post-header">
+      {inSeries && (
+        <p class="series-badge"><a href={seriesPath}>{seriesTitle}</a> · {stepLabel}</p>
+      )}
       <h1>{post.data.title}</h1>
       <div class="post-meta">
         <time datetime={isoDate}>{dateFormatted}</time>
@@ -63,6 +83,20 @@ const inline = (text: string) =>
     <div class="post-content">
       <Content />
     </div>
+
+    {inSeries && (
+      <nav class="series-nav" aria-label={`${seriesTitle} series`}>
+        <p class="series-nav__label">{seriesTitle} · {stepLabel} · <a href={seriesPath}>See the whole path</a></p>
+        <div class="series-nav__links">
+          {prevStep ? (
+            <a class="series-nav__link" href={`/${prevStep.slug}`}><span>← Previous</span>{prevStep.title}</a>
+          ) : <span />}
+          {nextStep && (
+            <a class="series-nav__link series-nav__link--next" href={`/${nextStep.slug}`}><span>Next →</span>{nextStep.title}</a>
+          )}
+        </div>
+      </nav>
+    )}
 
     <footer class="post-footer">
       Written by Karol Piątek - find me on <a href="https://www.linkedin.com/in/karolpiatek/">LinkedIn</a> or <a href="https://github.com/karolpiateknet">GitHub</a>.
