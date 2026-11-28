@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import ExternalIcon from '../../components/ExternalIcon.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -20,21 +21,24 @@ export async function getStaticPaths() {
 
 const { tag, posts } = Astro.props;
 const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const host = (url: string) => new URL(url).hostname.replace(/^www\./, '');
 ---
 <Base title={`Tag: ${tag}`}>
-  <p style="color: var(--color-muted);"><a href="/tags">← All tags</a></p>
-  <h1>Tag: {tag}</h1>
-  <ul class="post-list">
+  <section class="page-head" aria-labelledby="tag-title">
+    <h1 id="tag-title">{tag}</h1>
+    <p class="page-head__status">{posts.length} {posts.length === 1 ? 'post' : 'posts'} · <a href="/tags">All tags</a></p>
+  </section>
+  <ul class="entries" style="margin-top: var(--space-5); border-top: 2px solid var(--rule);">
     {posts.map((post) => (
-      <li class="post-list__item">
-        <h2 class="post-list__title">
-          <a href={post.data.redirectTo ?? `/${post.id}`}>{post.data.title}</a>
-        </h2>
-        <div class="post-list__meta">
-          <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
-          {post.data.redirectTo && <span class="tag-chip">External</span>}
+      <li class="entry">
+        <time class="entry__date" datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+        <div>
+          <h2 class="entry__title">
+            <a href={post.data.redirectTo ?? `/${post.id}`}>{post.data.title}</a>
+            {post.data.redirectTo && <span class="entry__ext"> on {host(post.data.redirectTo)} <ExternalIcon /></span>}
+          </h2>
+          {post.data.description && <p class="entry__excerpt">{post.data.description}</p>}
         </div>
-        {post.data.description && <p class="post-list__excerpt">{post.data.description}</p>}
       </li>
     ))}
   </ul>

@@ -2,10 +2,12 @@
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
-  <div>
-    <a href="https://www.linkedin.com/in/karolpiatek/" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://github.com/karolpiateknet" target="_blank" rel="noopener">GitHub</a>
-    <a href="/rss.xml">RSS</a>
+  <div class="page site-footer__inner">
+    <span>© {year} Karol Piątek · Swifty Friday</span>
+    <nav aria-label="Elsewhere">
+      <a href="https://www.linkedin.com/in/karolpiatek/">LinkedIn</a>
+      <a href="https://github.com/karolpiateknet">GitHub</a>
+      <a href="/rss.xml">RSS</a>
+    </nav>
   </div>
-  <div style="margin-top: 0.5rem;">© {year} Karol Piątek</div>
 </footer>

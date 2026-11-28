@@ -13,16 +13,13 @@ for (const post of posts) {
 const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 ---
 <Base title="Tags">
-  <h1>Tags</h1>
-  <p style="color: var(--color-fg-soft);">Browse posts by topic.</p>
-  <ul class="post-list">
+  <section class="page-head" aria-labelledby="tags-title">
+    <h1 id="tags-title">Tags</h1>
+    <p class="page-head__lede">Every post by topic. For the AI work in order, follow <a href="/ai-for-teams">AI for teams</a>.</p>
+  </section>
+  <ul class="tag-index">
     {tags.map(([tag, count]) => (
-      <li class="post-list__item">
-        <h2 class="post-list__title"><a href={`/tags/${tag}`}>{tag}</a></h2>
-        <div class="post-list__meta">
-          <span>{count} {count === 1 ? 'post' : 'posts'}</span>
-        </div>
-      </li>
+      <li><a href={`/tags/${tag}`}>{tag}</a><span>{count} {count === 1 ? 'post' : 'posts'}</span></li>
     ))}
   </ul>
 </Base>

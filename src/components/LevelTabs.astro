@@ -1,0 +1,205 @@
+---
+// "AI for teams, level by level" on the home page.
+// Desktop: tabs on the left, the level's panel on the right; the block pins
+// while you scroll and each stretch of scroll opens the next level.
+// Phone, no JS: every level stacked, nothing hidden.
+// Reduced motion: no pinning, tabs switch on click only.
+import { getCollection } from 'astro:content';
+import { getSeriesStatus } from '../data/series-status';
+import ArrowIcon from './ArrowIcon.astro';
+import PixelIcon from './PixelIcon.astro';
+
+interface Props {
+  title: string;
+  headingId: string;
+  planHref: string;
+}
+
+const { title, headingId, planHref } = Astro.props;
+const { levels } = await getSeriesStatus();
+const posts = new Map((await getCollection('posts')).map((p) => [p.id, p]));
+---
+<div class="lt" data-lt style={`--lt-count: ${levels.length}`}>
+  <div class="lt__track">
+    {levels.map((_, i) => <div class="lt__stop" style={`--i: ${i}`} aria-hidden="true"></div>)}
+    <div class="lt__sticky">
+      <div class="section__head">
+        <h2 id={headingId}>{title}</h2>
+        <a class="action action--quiet lt__plan" href={planHref}>See the full plan <ArrowIcon /></a>
+      </div>
+
+      <div class="lt__body">
+        <div class="lt__tabs" role="tablist" aria-orientation="vertical" aria-labelledby={headingId} hidden>
+          {levels.map((level, i) => (
+            <button
+              class="lt__tab"
+              role="tab"
+              type="button"
+              id={`lt-tab-${level.number}`}
+              aria-controls={`lt-panel-${level.number}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+            >
+              <span class="lt__tab-no">{level.number}</span>
+              <span class="lt__tab-name">{level.name}</span>
+              <span class="lt__tab-for">{level.audience}</span>
+              <span class="lt__tab-go" aria-hidden="true"><PixelIcon name="arrow" /></span>
+            </button>
+          ))}
+        </div>
+
+        <div class="lt__panels">
+          {levels.map((level) => (
+            <section class="lt__panel" id={`lt-panel-${level.number}`} aria-labelledby={`lt-title-${level.number}`}>
+              <h3 class="lt__panel-title" id={`lt-title-${level.number}`}><span class="level__no">{level.number}</span>{level.name}</h3>
+              <p class="lt__for">{level.audience}</p>
+              <p class="lt__summary">{level.summary}</p>
+              <ul class="lt__posts">
+                {level.steps.filter((s) => s.live && s.slug).map((step) => {
+                  const post = posts.get(step.slug!);
+                  return (
+                    <li class="lt__post">
+                      <span class="cell cell--live" aria-hidden="true"></span>
+                      <div>
+                        <a class="lt__post-title" href={`/${step.slug}`}>{post?.data.title ?? step.title}</a>
+                        <p class="lt__post-desc">{step.blurb}</p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div class="lt__meter">
+                <span class="cells__group" aria-hidden="true">
+                  {level.steps.map((step, i) => <span class={`cell${step.live ? ' cell--live' : ''}`} style={`--i: ${i}`}></span>)}
+                </span>
+                <p class="lt__more">
+                  {level.liveCount} of {level.steps.length} live{level.steps.length > level.liveCount && `, ${level.steps.length - level.liveCount} more coming`}
+                </p>
+              </div>
+            </section>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const desktop = window.matchMedia('(min-width: 861px)');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.querySelectorAll<HTMLElement>('[data-lt]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('.lt__track')!;
+    const tablist = root.querySelector<HTMLElement>('.lt__tabs')!;
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('.lt__tab')];
+    const panels = [...root.querySelectorAll<HTMLElement>('.lt__panel')];
+    const count = tabs.length;
+    let active = 0;
+    let mode: 'stack' | 'tabs' | 'pinned' = 'stack';
+    // While a click scrolls the pinned block to its level, scroll position
+    // must not pick levels: it would flick through every level in between.
+    let lockedTo: number | null = null;
+    let unlockTimer = 0;
+    const unlock = () => {
+      lockedTo = null;
+      window.clearTimeout(unlockTimer);
+    };
+
+    const show = (index: number) => {
+      active = index;
+      tabs.forEach((tab, i) => {
+        const on = i === index;
+        tab.setAttribute('aria-selected', String(on));
+        tab.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach((panel, i) => {
+        panel.hidden = mode !== 'stack' && i !== index;
+      });
+    };
+
+    // Scroll range the pinned block uses: from its top reaching the viewport
+    // top until the track's bottom reaches the viewport bottom.
+    const range = () => {
+      const top = track.getBoundingClientRect().top + window.scrollY;
+      return { top, length: track.offsetHeight - window.innerHeight };
+    };
+
+    const onScroll = () => {
+      if (mode !== 'pinned' || lockedTo !== null) return;
+      const { top, length } = range();
+      // One stop per level (see .lt__stop); switch halfway between stops.
+      const progress = (window.scrollY - top) / Math.max(length, 1);
+      const index = Math.min(count - 1, Math.max(0, Math.round(progress * (count - 1))));
+      if (index !== active) show(index);
+    };
+
+    // Land on the level's snap stop.
+    const scrollToTab = (index: number) => {
+      const { top, length } = range();
+      window.scrollTo({ top: top + (index / Math.max(count - 1, 1)) * length, behavior: 'smooth' });
+    };
+
+    const select = (index: number, focus = false) => {
+      if (mode === 'pinned') {
+        lockedTo = index;
+        window.clearTimeout(unlockTimer);
+        // scrollend ends the lock; the timer covers browsers without it.
+        unlockTimer = window.setTimeout(unlock, 1200);
+        scrollToTab(index);
+      }
+      show(index);
+      if (focus) tabs[index].focus();
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('keydown', (event) => {
+        const keys: Record<string, number> = {
+          ArrowDown: (i + 1) % count,
+          ArrowRight: (i + 1) % count,
+          ArrowUp: (i - 1 + count) % count,
+          ArrowLeft: (i - 1 + count) % count,
+          Home: 0,
+          End: count - 1,
+        };
+        if (event.key in keys) {
+          event.preventDefault();
+          select(keys[event.key], true);
+        }
+      });
+    });
+
+    const setMode = () => {
+      mode = !desktop.matches ? 'stack' : reduced.matches ? 'tabs' : 'pinned';
+      root.dataset.mode = mode;
+      tablist.hidden = mode === 'stack';
+      panels.forEach((panel, i) => {
+        if (mode === 'stack') {
+          panel.removeAttribute('role');
+          panel.removeAttribute('tabindex');
+          panel.setAttribute('aria-labelledby', `lt-title-${i + 1}`);
+        } else {
+          panel.setAttribute('role', 'tabpanel');
+          panel.setAttribute('aria-labelledby', tabs[i].id);
+          panel.tabIndex = 0;
+        }
+      });
+      show(active);
+      onScroll();
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scrollend', () => {
+      if (lockedTo === null) return;
+      unlock();
+      onScroll();
+    });
+    // A wheel or touch from the reader hands control back to scrolling.
+    window.addEventListener('wheel', unlock, { passive: true });
+    window.addEventListener('touchstart', unlock, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    desktop.addEventListener('change', setMode);
+    reduced.addEventListener('change', setMode);
+    setMode();
+  });
+</script>

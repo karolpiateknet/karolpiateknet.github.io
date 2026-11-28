@@ -1,60 +1,34 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import { seriesLevels, seriesStart, seriesTitle, type SeriesStep } from '../data/ai-series';
+import SeriesCells from '../components/SeriesCells.astro';
+import SeriesMap from '../components/SeriesMap.astro';
+import Invite from '../components/Invite.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import { seriesTitle } from '../data/ai-series';
+import { getSeriesStatus } from '../data/series-status';
 
-const published = new Set((await getCollection('posts')).map((post) => post.id));
-const isLive = (step: SeriesStep) => !!step.slug && published.has(step.slug);
-
-let counter = 0;
-const levels = seriesLevels.map((level, index) => ({
-  ...level,
-  number: index + 1,
-  steps: level.steps.map((step) => ({ ...step, number: ++counter, live: isLive(step) })),
-}));
-const liveCount = levels.flatMap((level) => level.steps).filter((step) => step.live).length;
-const totalCount = counter;
-const startLive = isLive(seriesStart);
+const { start, liveCount, totalCount } = await getSeriesStatus();
 ---
 <Base
   title={`${seriesTitle}: a step-by-step path`}
   description="How an engineering team goes from a few people trying AI to a system that compounds: from one engineer and an agent, through guardrails and team flow, to owning AI like a platform."
 >
-  <section class="hero">
-    <p class="hero__eyebrow">Series · {liveCount} of {totalCount} steps published</p>
-    <h1 class="hero__title">{seriesTitle}, step by step</h1>
-    <p class="hero__lede">
+  <section class="page-head" aria-labelledby="series-title">
+    <h1 id="series-title">{seriesTitle}, step by step</h1>
+    <p class="page-head__status">{liveCount} of {totalCount} steps published · a new one about every week</p>
+    <p class="page-head__lede">
       The path a team actually walks with AI agents, from the habits one engineer can start tomorrow to owning AI like CI. Each step builds on the one before it, and each one comes from running it on a real team.
     </p>
-    {startLive && <a href={`/${seriesStart.slug}`} class="hero__cta">Start here: {seriesStart.title}</a>}
+    <div class="series-strip"><SeriesCells /></div>
+    {start.live && <a class="action" href={`/${start.slug}`}>Start here: {start.title} <ArrowIcon /></a>}
   </section>
 
-  {levels.map((level) => (
-    <section class="series-level">
-      <p class="section-eyebrow">Level {level.number}</p>
-      <h2 class="series-level__name">{level.name}</h2>
-      <p class="series-level__summary">{level.summary}</p>
-      <ol class="series-steps">
-        {level.steps.map((step) => (
-          <li class={`series-step${step.live ? '' : ' series-step--soon'}`}>
-            <span class="series-step__num">{step.number}</span>
-            <div>
-              <h3 class="series-step__title">
-                {step.live ? <a href={`/${step.slug}`}>{step.title}</a> : step.title}
-                {!step.live && <span class="tag-chip">Coming soon</span>}
-              </h3>
-              <p class="series-step__blurb">{step.blurb}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </section>
-  ))}
+  <section class="section" aria-labelledby="levels">
+    <div class="section__head">
+      <h2 id="levels">The path, level by level</h2>
+    </div>
+    <SeriesMap blurbs />
+  </section>
 
-  <div class="banner">
-    <p class="banner__big">New steps land about once a week.</p>
-    <p class="banner__sub">
-      Questions, or a different experience with any of this? I would love to hear it, <a href="https://www.linkedin.com/in/karolpiatek/">find me on LinkedIn</a>.
-    </p>
-  </div>
+  <Invite />
 </Base>

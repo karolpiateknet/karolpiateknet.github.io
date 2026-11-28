@@ -1,0 +1,39 @@
+---
+import { getSeriesStatus } from '../data/series-status';
+import PixelIcon from './PixelIcon.astro';
+import { levelIcons } from '../data/pixel-icons';
+
+interface Props {
+  blurbs?: boolean;
+  liveOnly?: boolean;
+}
+
+const { blurbs = false, liveOnly = false } = Astro.props;
+const { levels } = await getSeriesStatus();
+---
+<div class="series-map">
+  {levels.map((level, i) => (
+    <section class="level" aria-labelledby={`level-${level.number}`}>
+      <PixelIcon name={levelIcons[i]} class="level__icon" />
+      <h3 class="level__name" id={`level-${level.number}`}><span class="level__no">{level.number}</span>{level.name}</h3>
+      <p class="level__for">{level.audience}</p>
+      {!liveOnly && <p class="level__count">{level.liveCount} of {level.steps.length} steps live</p>}
+      {!liveOnly && <p class="level__summary">{level.summary}</p>}
+      <ol class="steps">
+        {level.steps.filter((step) => !liveOnly || step.live).map((step) => (
+          <li class={`step${step.live ? '' : ' step--soon'}`}>
+            <span class={`cell${step.live ? ' cell--live' : ''}`} aria-hidden="true"></span>
+            <span class="step__title">
+              {step.live ? <a href={`/${step.slug}`}>{step.title}</a> : step.title}
+              {!step.live && <span class="step__soon"> · coming soon</span>}
+              {blurbs && <span class="step__blurb">{step.blurb}</span>}
+            </span>
+          </li>
+        ))}
+      </ol>
+      {liveOnly && level.steps.length > level.liveCount && (
+        <p class="level__more">{level.steps.length - level.liveCount} more coming</p>
+      )}
+    </section>
+  ))}
+</div>

@@ -1,40 +1,116 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import Figures from '../components/Figures.astro';
+import LevelTabs from '../components/LevelTabs.astro';
+import Invite from '../components/Invite.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import ExternalIcon from '../components/ExternalIcon.astro';
+import { homeFigures } from '../data/proof';
+import { allSteps } from '../data/ai-series';
+import { getSeriesStatus } from '../data/series-status';
 
-const allPosts = (await getCollection('posts'))
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const posts = (await getCollection('posts')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const stepIndex = new Map(allSteps.map((step, i) => [step.slug, i]));
+const earlierPosts = posts.filter((p) => !stepIndex.has(p.id));
+const { start } = await getSeriesStatus();
 
-const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const fmtShort = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+// Earlier posts grouped by year, newest first, for the archive ledger.
+const years = [...earlierPosts.reduce((map, post, n) => {
+  const y = post.data.date.getFullYear();
+  map.set(y, [...(map.get(y) ?? []), { ...post, n }]);
+  return map;
+}, new Map<number, (typeof earlierPosts[number] & { n: number })[]>())];
+const lastYear = years[0]?.[0];
+const firstYear = years[years.length - 1]?.[0];
+const host = (url: string) => new URL(url).hostname.replace(/^www\./, '');
 ---
-<Base title="Karol Piątek" description="Karol Piątek - Staff iOS Engineer building AI dev tools and automation. Writing at Swifty Friday.">
-  <section class="hero">
-    <p class="hero__eyebrow">Karol Piątek · Staff iOS Engineer</p>
-    <h1 class="hero__title">Making AI useful in engineering teams.</h1>
-    <p class="hero__lede">
-      I'm a Staff iOS Engineer at TransferGo. My day job is making AI useful inside an engineering team - agents, custom skills, automated reviews. This site is where I write about it.
+<Base title="Karol Piątek" description="Karol Piątek on making AI useful in engineering teams: guardrails, workflow and an AI SDLC, measured on a real production team.">
+  <section class="masthead slide slide--first" aria-labelledby="claim">
+    <h1 class="masthead__title" id="claim">Making AI useful in engineering teams.</h1>
+    <p class="masthead__lede">
+      I help an iOS team build with AI agents every day: shared skills, guardrails, automated reviews. These are the numbers, and the posts behind them.
     </p>
-    <a href="/about" class="hero__cta">More about me</a>
+
+    <div class="masthead__actions">
+      {start.live && <a class="action" href={`/${start.slug}`}>Start the series <ArrowIcon /></a>}
+    </div>
+
+    <Figures items={homeFigures} />
   </section>
 
-  <section>
-    <p class="section-eyebrow">All writing</p>
-    <ul class="post-list">
-      {allPosts.map((post) => (
-        <li class="post-list__item">
-          <h2 class="post-list__title">
-            <a href={post.data.redirectTo ?? `/${post.id}`}>{post.data.title}</a>
-          </h2>
-          <div class="post-list__meta">
-            <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
-            {post.data.redirectTo && <span class="tag-chip">External</span>}
-            {post.data.tags.slice(0, 3).map((tag) => (
-              <a href={`/tags/${tag.toLowerCase()}`} class="tag-chip">{tag}</a>
-            ))}
-          </div>
-          {post.data.description && <p class="post-list__excerpt">{post.data.description}</p>}
-        </li>
-      ))}
-    </ul>
+  <section class="slide slide--levels" id="writing" aria-labelledby="path">
+    <LevelTabs title="AI for teams, level by level" headingId="path" planHref="/ai-for-teams" />
   </section>
+
+  <section class="section slide slide--earlier" aria-labelledby="earlier">
+    <div class="section__head">
+      <div>
+        <h2 id="earlier">Before the agents</h2>
+        <p class="archive__dek">iOS testing, security and craft, {firstYear} to {lastYear}.</p>
+      </div>
+      <a class="action action--quiet archive__all" href="/writing">All writing <ArrowIcon /></a>
+    </div>
+    <div class="archive">
+      {years.map(([year, yearPosts], y) => (
+        <section class="archive__year" aria-label={String(year)} style={`--y: ${y}`}>
+          <p class="archive__label" aria-hidden="true">{year}</p>
+          <ul class="archive__list">
+            {yearPosts.map((post) => (
+              <li class="archive__item" style={`--n: ${post.n}`}>
+                <a class="archive__link" href={post.data.redirectTo ?? `/${post.id}`}>
+                  <span class="archive__title">{post.data.title}</span>
+                  {post.data.redirectTo
+                    ? <span class="archive__where">{host(post.data.redirectTo)} <ExternalIcon /></span>
+                    : <time class="archive__date" datetime={post.data.date.toISOString()}>{fmtShort(post.data.date)}</time>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </section>
+
+  <div class="slide slide--last">
+    <Invite variant="band" />
+  </div>
+
+  <script>
+    // Home as a deck: each slide fills the viewport and plays its own
+    // entrance when it arrives. Content stays visible if this never runs.
+    const root = document.documentElement;
+    const measure = () => {
+      const header = document.querySelector<HTMLElement>('.site-header');
+      const footer = document.querySelector<HTMLElement>('.site-footer');
+      root.style.setProperty('--header-h', `${header?.offsetHeight ?? 0}px`);
+      root.style.setProperty('--footer-h', `${footer?.offsetHeight ?? 0}px`);
+    };
+    measure();
+    window.addEventListener('resize', measure, { passive: true });
+
+    // A slide arrives once it covers the middle band of the viewport, and
+    // resets only when fully off screen, so the entrance replays on the next
+    // visit, never mid-view. Measured from the viewport rather than as a
+    // share of the slide, so tall slides (the levels list on a phone) still
+    // arrive, and content is never left hidden.
+    const slides = [...document.querySelectorAll<HTMLElement>('.slide:not(.slide--first)')];
+    const update = () => {
+      const vh = window.innerHeight;
+      slides.forEach((slide) => {
+        const r = slide.getBoundingClientRect();
+        if (r.top < vh * 0.75 && r.bottom > vh * 0.25) slide.classList.add('is-in');
+        else if (r.bottom <= 0 || r.top >= vh) slide.classList.remove('is-in');
+      });
+    };
+    update();
+    root.classList.add('deck-ready');
+    // Three rects per scroll event is cheap; no frame-based throttling, so it
+    // also works where animation frames are paused.
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    // Jumping to an anchor (e.g. /#writing) reveals its slide at once.
+    window.addEventListener('hashchange', update);
+  </script>
 </Base>

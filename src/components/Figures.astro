@@ -1,0 +1,22 @@
+---
+import type { ProofFigure } from '../data/proof';
+
+interface Props {
+  items: ProofFigure[];
+  cols?: number;
+  label?: string;
+}
+
+const { items, cols = items.length, label = 'Measured outcomes' } = Astro.props;
+---
+<ul class={`figures${items.length > cols ? ' figures--wrap' : ''}`} style={`--fig-cols: ${cols}`} aria-label={label}>
+  {items.map((item) => (
+    <li class="figure">
+      <div class="figure__num">{item.value}</div>
+      <div class="figure__label">
+        <span>{item.label}</span>
+      </div>
+      <p class="figure__where">{item.where}</p>
+    </li>
+  ))}
+</ul>

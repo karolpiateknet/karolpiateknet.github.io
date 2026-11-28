@@ -1,0 +1,21 @@
+---
+import { pixelRuns, pixelSize, type PixelIconName } from '../data/pixel-icons';
+
+interface Props {
+  name: PixelIconName;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+const runs = pixelRuns(name);
+const { w, h } = pixelSize(name);
+---
+<svg
+  class:list={['pixel-icon', className]}
+  viewBox={`0 0 ${w} ${h}`}
+  shape-rendering="crispEdges"
+  aria-hidden="true"
+  focusable="false"
+>
+  {runs.map((r) => <rect x={r.x} y={r.y} width={r.w} height="1" class={`px-${r.ink}`} />)}
+</svg>

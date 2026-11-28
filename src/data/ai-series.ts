@@ -131,7 +131,7 @@ export const seriesLevels: SeriesLevel[] = [
       },
       {
         title: 'Senior engineer, not senior iOS engineer',
-        blurb: 'Specialist on one platform, contributing to all of them.',
+        blurb: 'Specialist on one platform, contributing to all of them, made easy by the same architecture and test patterns everywhere.',
       },
       {
         title: 'Skills are code',

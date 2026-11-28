@@ -13,7 +13,7 @@ interface Props {
 
 const { title, description, ogImage, wide = false, redirectTo } = Astro.props;
 const fullTitle = title === 'Karol Piątek' ? `${title} - Swifty Friday` : `${title} - Karol Piątek`;
-const desc = description ?? 'Staff iOS Engineer building agentic AI dev tools and automation.';
+const desc = description ?? 'Karol Piątek on making AI useful in engineering teams: guardrails, workflow and an AI SDLC, measured on a real team.';
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).toString() : undefined;
 
@@ -40,6 +40,8 @@ const cloudflareAnalyticsToken = 'bd00af875b694171b55ddcc448196800';
     <link rel="alternate" type="application/rss+xml" title="Swifty Friday" href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/png" href="/assets/images/emoji.png" />
+    <link rel="preload" href="/assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#eef0ec" />
     {cloudflareAnalyticsToken && (
       <script
         is:inline
@@ -50,8 +52,9 @@ const cloudflareAnalyticsToken = 'bd00af875b694171b55ddcc448196800';
     )}
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <Header />
-    <main class={wide ? 'wide' : ''}>
+    <main id="main" class="page">
       <slot />
     </main>
     <Footer />

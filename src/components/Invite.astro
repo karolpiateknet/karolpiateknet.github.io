@@ -1,0 +1,35 @@
+---
+import ArrowIcon from './ArrowIcon.astro';
+import PixelIcon from './PixelIcon.astro';
+
+interface Props {
+  // "band": the full-width ultramarine closing band that runs into the
+  // footer (home). Default: the ruled invitation used on inner pages.
+  variant?: 'ruled' | 'band';
+}
+
+const { variant = 'ruled' } = Astro.props;
+const line = 'If your team is bringing AI into how it builds software, I’m happy to compare notes.';
+const sub = 'Everything here comes from building with AI agents every day on a production iOS team, not from demos. LinkedIn is the easiest way to reach me.';
+const href = 'https://www.linkedin.com/in/karolpiatek/';
+---
+{variant === 'band' ? (
+  <section class="invite invite--band" aria-label="Get in touch">
+    <PixelIcon name="chat" class="invite__icon" />
+    <div class="invite__main">
+      <p class="invite__line">{line}</p>
+      <a class="action action--quiet" href={href}>Message me on LinkedIn <ArrowIcon /></a>
+    </div>
+    <p class="invite__sub">{sub}</p>
+  </section>
+) : (
+  <section class="invite" aria-label="Get in touch">
+    <div>
+      <p class="invite__line">{line}</p>
+      <p class="invite__sub">{sub}</p>
+    </div>
+    <div>
+      <a class="action action--quiet" href={href}>Message me on LinkedIn <ArrowIcon /></a>
+    </div>
+  </section>
+)}

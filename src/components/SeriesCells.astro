@@ -1,0 +1,31 @@
+---
+// The series as cells: the hub first, then one group per level.
+// Same object on home, the series page and every post.
+import { getSeriesStatus, type StepStatus } from '../data/series-status';
+
+interface Props {
+  current?: string;
+}
+
+const { current } = Astro.props;
+const { start, levels } = await getSeriesStatus();
+const groups: StepStatus[][] = [[start], ...levels.map((l) => l.steps)];
+let i = 0;
+const cellTitle = (s: StepStatus) => (s.number === 0 ? `Start: ${s.title}` : `Step ${s.number}: ${s.title}${s.live ? '' : ' (coming soon)'}`);
+---
+<div class="cells" role="list" aria-label="AI for teams steps">
+  {groups.map((group) => (
+    <div class="cells__group">
+      {group.map((step) => {
+        const n = i++;
+        const here = current && step.slug === current;
+        const cls = `cell${step.live ? ' cell--live' : ''}${here ? ' cell--here' : ''}`;
+        return step.live ? (
+          <a role="listitem" class={cls} style={`--i: ${n}`} href={`/${step.slug}`} title={cellTitle(step)} aria-label={cellTitle(step)} aria-current={here ? 'page' : undefined}></a>
+        ) : (
+          <span role="listitem" class={cls} style={`--i: ${n}`} title={cellTitle(step)} aria-label={cellTitle(step)}></span>
+        );
+      })}
+    </div>
+  ))}
+</div>

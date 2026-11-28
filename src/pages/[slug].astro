@@ -2,6 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { allSteps, seriesPath, seriesTitle } from '../data/ai-series';
+import SeriesCells from '../components/SeriesCells.astro';
+import Invite from '../components/Invite.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -48,16 +50,16 @@ const inline = (text: string) =>
 <Base title={post.data.title} description={post.data.description} ogImage={post.data.image} redirectTo={post.data.redirectTo}>
   <article>
     <header class="post-header">
-      {inSeries && (
-        <p class="series-badge"><a href={seriesPath}>{seriesTitle}</a> · {stepLabel}</p>
-      )}
       <h1>{post.data.title}</h1>
       <div class="post-meta">
         <time datetime={isoDate}>{dateFormatted}</time>
+        {inSeries && (
+          <span class="post-meta__step"><a href={seriesPath}>{seriesTitle}</a> · {stepLabel}</span>
+        )}
         {post.data.tags.length > 0 && (
           <span>
-            {post.data.tags.map((tag) => (
-              <a href={`/tags/${tag.toLowerCase()}`} class="tag-chip" style="margin-right: 0.35rem;">{tag}</a>
+            {post.data.tags.map((tag, i) => (
+              <>{i > 0 && ', '}<a href={`/tags/${tag.toLowerCase()}`}>{tag}</a></>
             ))}
           </span>
         )}
@@ -86,20 +88,23 @@ const inline = (text: string) =>
 
     {inSeries && (
       <nav class="series-nav" aria-label={`${seriesTitle} series`}>
-        <p class="series-nav__label">{seriesTitle} · {stepLabel} · <a href={seriesPath}>See the whole path</a></p>
+        <p class="series-nav__head"><strong>{seriesTitle} · {stepLabel}</strong> <a href={seriesPath}>See the whole path</a></p>
+        <SeriesCells current={post.id} />
         <div class="series-nav__links">
           {prevStep ? (
-            <a class="series-nav__link" href={`/${prevStep.slug}`}><span>← Previous</span>{prevStep.title}</a>
+            <a class="series-nav__link" href={`/${prevStep.slug}`}><span>Previous</span>{prevStep.title}</a>
           ) : <span />}
           {nextStep && (
-            <a class="series-nav__link series-nav__link--next" href={`/${nextStep.slug}`}><span>Next →</span>{nextStep.title}</a>
+            <a class="series-nav__link series-nav__link--next" href={`/${nextStep.slug}`}><span>Next</span>{nextStep.title}</a>
           )}
         </div>
       </nav>
     )}
 
-    <footer class="post-footer">
-      Written by Karol Piątek - find me on <a href="https://www.linkedin.com/in/karolpiatek/">LinkedIn</a> or <a href="https://github.com/karolpiateknet">GitHub</a>.
-    </footer>
+    {!post.data.redirectTo && (
+      <div class="post-footer">
+        <Invite />
+      </div>
+    )}
   </article>
 </Base>

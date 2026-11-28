@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ExternalIcon from '../components/ExternalIcon.astro';
+
+const posts = (await getCollection('posts')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const host = (url: string) => new URL(url).hostname.replace(/^www\./, '');
+---
+<Base title="Writing" description="Every post by Karol Piątek, newest first: AI in engineering teams, iOS, testing and security.">
+  <section class="page-head" aria-labelledby="writing-title">
+    <h1 id="writing-title">Writing</h1>
+    <p class="page-head__status">{posts.length} posts, newest first · <a href="/ai-for-teams">AI for teams, in order</a> · <a href="/tags">By topic</a></p>
+  </section>
+  <ul class="entries" style="margin-top: var(--space-5); border-top: 2px solid var(--rule);">
+    {posts.map((post) => (
+      <li class="entry">
+        <time class="entry__date" datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+        <div>
+          <h2 class="entry__title">
+            <a href={post.data.redirectTo ?? `/${post.id}`}>{post.data.title}</a>
+            {post.data.redirectTo && <span class="entry__ext"> on {host(post.data.redirectTo)} <ExternalIcon /></span>}
+          </h2>
+          {post.data.description && <p class="entry__excerpt">{post.data.description}</p>}
+        </div>
+      </li>
+    ))}
+  </ul>
+</Base>
