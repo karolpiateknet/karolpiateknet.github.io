@@ -71,6 +71,8 @@
   --page: 76rem;
   --gutter: clamp(1.25rem, 3vw, 2rem);
   --measure: 54ch;
+  /* Reading width for article text: about 70 characters at 1.125rem. */
+  --read: 40rem;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 1rem;
@@ -572,7 +574,7 @@ a.cell:hover { background: var(--orange); border-color: var(--orange); }
 .post-meta__step a { color: var(--blue); font-weight: 700; }
 
 .tldr {
-  max-width: var(--measure);
+  max-width: var(--read);
   margin: 0 0 var(--space-5);
   padding: var(--space-3) var(--space-4);
   border: 2px solid var(--blue);
@@ -581,11 +583,12 @@ a.cell:hover { background: var(--orange); border-color: var(--orange); }
 .tldr ul { margin: 0; padding-left: 1.2em; }
 .tldr li { margin: 0.3em 0; }
 
-.post-content { font-size: 1.05rem; }
-.post-content h1 { font-size: 1.75rem; }
-.post-content h2 { font-size: 1.5rem; }
-.post-content h3 { font-size: 1.2rem; }
+.post-content { font-size: 1.125rem; line-height: 1.65; }
+.post-content h2 { font-size: 1.75rem; }
+.post-content h3 { font-size: 1.3rem; }
+.post-content h4 { font-size: 1.1rem; }
 .post-content > :first-child { margin-top: 0; }
+.post-content :is(h2, h3, h4) { scroll-margin-top: var(--space-5); }
 
 .series-nav { margin-top: var(--space-6); border-top: 2px solid var(--rule); padding-top: var(--space-3); max-width: var(--measure); }
 .series-nav__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); flex-wrap: wrap; margin: 0 0 var(--space-3); font-size: 0.95rem; }
@@ -1060,3 +1063,58 @@ body:has(.invite--band) .site-footer a { color: var(--paper); }
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
+
+/* ---------- Article layout: text column + "On this page" rail ---------- */
+/* On the home page's three columns: the article across the first two, the
+   rail in the third. Running text keeps a reading measure (--read); code,
+   diagrams and tables use the full two-column width so they rarely scroll. */
+main > article.post { max-width: none; }
+.post .post-content,
+.post .series-nav,
+.post .post-footer,
+.post .redirect-notice { max-width: none; }
+.post-content > :is(p, ul, ol, blockquote, h2, h3, h4, h5, hr) { max-width: var(--read); }
+.post .post-header { max-width: none; }
+
+@media (min-width: 901px) {
+  .post--rail {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas: "head head head" "main main rail";
+    align-items: start;
+  }
+  .post--rail .post-header { grid-area: head; }
+  /* The title spans the article's two columns, not the rail. */
+  .post .post-header h1 { max-width: 66%; }
+  .post--rail .post-main { grid-area: main; min-width: 0; padding-right: var(--space-5); }
+  .post--rail .post-rail { grid-area: rail; align-self: stretch; padding-left: var(--space-4); }
+}
+@media (max-width: 900px) { .post-rail { display: none; } }
+
+.post-rail__inner {
+  position: sticky;
+  top: var(--space-5);
+  border-top: 2px solid var(--rule);
+  padding-top: var(--space-3);
+}
+.post-rail__label { margin: 0 0 var(--space-3); font-size: 0.875rem; font-weight: 800; font-stretch: 112%; }
+.toc { list-style: none; margin: 0; padding: 0; counter-reset: none; }
+.toc li { margin: 0; }
+.toc li + li { border-top: 1px solid var(--rule-soft); }
+.toc__link {
+  display: grid;
+  grid-template-columns: 0.75rem minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+  padding: var(--space-2) 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--ink-soft);
+  background-image: none;
+}
+.toc__cell { width: 0.75rem; height: 0.75rem; border: 2px solid var(--blue); background: transparent; transform: translateY(0.1rem); }
+.toc__link:hover { color: var(--blue); }
+.toc__link[aria-current] { color: var(--ink); font-weight: 700; }
+.toc__link[aria-current] .toc__cell { background: var(--blue); }
+.post-rail__series { margin: var(--space-4) 0 0; padding-top: var(--space-3); border-top: 1px solid var(--rule-soft); font-size: 0.875rem; color: var(--ink-soft); }
+.post-rail__series a { font-weight: 700; }

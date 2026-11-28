@@ -30,7 +30,13 @@ const findLive = (from: number, dir: number) => {
 };
 const prevStep = inSeries ? findLive(stepIndex, -1) : undefined;
 const nextStep = inSeries ? findLive(stepIndex, 1) : undefined;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+// "On this page": the post's sections (h2 after the heading shift in
+// astro.config), with any leading emoji dropped from the list.
+const toc = headings
+  .filter((h) => h.depth === 2)
+  .map((h) => ({ slug: h.slug, text: h.text.replace(/^[^\p{L}\p{N}]+/u, '').trim() }));
+const hasRail = !post.data.redirectTo && toc.length > 1;
 const dateFormatted = post.data.date.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
@@ -48,7 +54,7 @@ const inline = (text: string) =>
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 <Base title={post.data.title} description={post.data.description} ogImage={post.data.image} redirectTo={post.data.redirectTo}>
-  <article>
+  <article class:list={['post', { 'post--rail': hasRail }]}>
     <header class="post-header">
       <h1>{post.data.title}</h1>
       <div class="post-meta">
@@ -66,6 +72,7 @@ const inline = (text: string) =>
       </div>
     </header>
 
+    <div class="post-main">
     {post.data.redirectTo && (
       <div class="redirect-notice">
         <strong>This post lives on an external site.</strong>{' '}
@@ -106,5 +113,43 @@ const inline = (text: string) =>
         <Invite />
       </div>
     )}
+    </div>
+    {hasRail && (
+      <aside class="post-rail" aria-label="On this page">
+        <div class="post-rail__inner">
+          <p class="post-rail__label">On this page</p>
+          <ol class="toc">
+            {toc.map((h) => (
+              <li><a class="toc__link" href={`#${h.slug}`}><span class="toc__cell" aria-hidden="true"></span>{h.text}</a></li>
+            ))}
+          </ol>
+          {inSeries && (
+            <p class="post-rail__series"><a href={seriesPath}>{seriesTitle}</a> · {stepLabel}</p>
+          )}
+        </div>
+      </aside>
+    )}
   </article>
+  {hasRail && (
+    <script>
+      // Mark the section being read: the last heading that has scrolled
+      // past the top third of the viewport.
+      const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc__link')];
+      const heads = links
+        .map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+        .filter((h): h is HTMLElement => !!h);
+      const mark = () => {
+        const line = window.innerHeight * 0.33;
+        let current = 0;
+        heads.forEach((h, i) => { if (h.getBoundingClientRect().top <= line) current = i; });
+        links.forEach((a, i) => {
+          if (i === current) a.setAttribute('aria-current', 'location');
+          else a.removeAttribute('aria-current');
+        });
+      };
+      mark();
+      window.addEventListener('scroll', mark, { passive: true });
+      window.addEventListener('resize', mark, { passive: true });
+    </script>
+  )}
 </Base>
